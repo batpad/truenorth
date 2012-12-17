@@ -1,0 +1,8 @@
+Django>1.4
+ox
+django-admin-sortable
+django_extensions
+django-debug-toolbar
+sorl-thumbnail
+Markdown
+django-markitup

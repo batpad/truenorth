@@ -1,0 +1,115 @@
+* {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	
+	box-sizing: border-box; 
+}
+
+html, body  { 
+	height: 100%;
+	width: 100%;
+}
+
+body {
+	background-color: #fff;
+	font-family:sans-serif;
+	color: #222;
+	font-size: 16px;
+	line-height: 1.4;
+}
+
+/* COLUMNS */
+
+/*.col25 {
+	width: 25%;
+}
+
+.col33 {
+	width:33.33%;
+}
+
+.col50 {
+	width: 50%;
+}
+
+.col75 {
+	width:75%;
+}
+*/
+
+/* COLUMNS */
+
+/* GLOBAL STYLES */
+
+
+.clear { 
+	clear: both;
+} 
+
+a {
+  text-decoration: none;
+}
+
+a:hover, a:focus {
+}
+
+strong {
+	font-weight: bold;
+}
+
+em {
+	font-style: italic;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+	padding-bottom:10px;
+}
+
+h6 {
+	font-size: 110%;
+}
+
+h5 {
+	font-size: 120%;
+}
+
+h4 {
+	font-size: 130%;
+}
+
+h3 {
+	font-size: 140%;
+}
+
+h2 {
+	font-size: 150%;
+}
+
+h1 {
+	font-size: 160%;
+}
+
+
+img {
+	max-width: 100%;
+	height: auto;
+}
+
+input[type="submit"] {
+	cursor: pointer;
+}
+
+textarea {
+	vertical-align: top;
+}
+
+/* END GLOBAL STYLES */
+
+
+/* MEDIA QUERIES */
+
+/*@media only screen and (max-width: 980px) {
+}*/
+
+/* END MEDIA QUERIES */
