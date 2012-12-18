@@ -157,6 +157,8 @@ INSTALLED_APPS = (
     'django_extensions',
     'adminsortable',
     'debug_toolbar',
+    'south',
+    
 )
 
 # A sample logging configuration. The only tangible logging

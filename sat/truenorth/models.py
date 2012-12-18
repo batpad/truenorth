@@ -13,6 +13,8 @@ class Student(models.Model):
     worksheets = models.ManyToManyField("Worksheet", through="StudentWorksheet")
     full_length_tests = models.ManyToManyField("FullLengthTest", through="StudentFullLengthTest")
     sectional_tests = models.ManyToManyField("SectionalTest", through="StudentSectionalTest")
+    completed = models.BooleanField(default=False)
+
 
     def __unicode__(self):
         return self.full_name
@@ -191,6 +193,8 @@ class Batch(models.Model):
     day = models.IntegerField(choices=WEEKDAY_CHOICES)
     time = models.TimeField()
     tutor  = models.ForeignKey("Tutor")
+    completed = models.BooleanField(default=False)
+
 
     class Meta:
         verbose_name_plural = "Batches"
