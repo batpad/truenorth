@@ -195,7 +195,6 @@ class Batch(models.Model):
     tutor  = models.ForeignKey("Tutor")
     completed = models.BooleanField(default=False)
 
-
     class Meta:
         verbose_name_plural = "Batches"
 
@@ -212,12 +211,42 @@ class Attendance(models.Model):
     def __unicode__(self):
         return unicode(self.batch) + " by " + unicode(self.tutor)
 
-class FeedbackSession(models.Model):
-    tutor = models.ForeignKey("Tutor")
-    start_time = models.DateTimeField()
-    duration = models.IntegerField(null=True, help_text="in hours")
-    students = models.ManyToManyField("Student")
+
+class Checkin(models.Model):
+    '''
+    Model for office staff to simply enter a user (can be student or tutor) and time in. Time-out is optional.
+    '''
+    user = models.ForeignKey(User)
+    time_in = models.DateTimeField() #FIXME: add default for datetime.datetime.now?
+    time_out = models.DateTimeField(blank=True, null=True)
 
     def __unicode__(self):
-        dtstring = self.start_time.strftime("%d %b, %Y at %H:%M")
-        return "%s: %s" % (self.tutor, dtstring,)
+        dtstring = self.time_in.strftime("%d %b, %Y at %H:%M")
+        return unicode(self.user) + " on " + dtstring
+
+
+class Interaction(models.Model):
+    '''
+    Model for tutor to log an interaction with a student, mentioning time, and some optional notes.
+    '''
+    tutor = models.ForeignKey(Tutor)
+    student = models.ForeignKey(Student)
+    datetime = models.DateTimeField() #Q: Add default for now?
+    notes = models.TextField(blank=True)
+    #Do we need some indication of what course / module this interaction was for?
+
+    def __unicode__(self):
+        dtstring = self.time_in.strftime("%d %b, %Y at %H:%M")
+        return "%s - %s on %s" % (unicode(self.tutor), unicode(self.student), dtstring)
+
+
+
+#class FeedbackSession(models.Model):
+#    tutor = models.ForeignKey("Tutor")
+#    start_time = models.DateTimeField()
+#    duration = models.IntegerField(null=True, help_text="in hours")
+#    students = models.ManyToManyField("Student")
+
+#    def __unicode__(self):
+#        dtstring = self.start_time.strftime("%d %b, %Y at %H:%M")
+#        return "%s: %s" % (self.tutor, dtstring,)
