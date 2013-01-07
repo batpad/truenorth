@@ -1,4 +1,4 @@
-Django>1.4
+git+http://github.com/django/django.git
 ox
 django-admin-sortable
 django_extensions
