@@ -1,6 +1,7 @@
 from django.contrib import admin
 from models import *
 
+
 class CourseSectionInline(admin.StackedInline):
     model = CourseSection
     extra = 4
@@ -56,9 +57,9 @@ class AttendanceAdmin(admin.ModelAdmin):
 class StudentWorksheetAdmin(admin.ModelAdmin):
     list_filter = ('student', 'worksheet', 'completed',)
 
-class FeedbackSessionAdmin(admin.ModelAdmin):
-    filter_horizontal = ('students',)
-    list_filter = ('tutor', 'students',)
+#class FeedbackSessionAdmin(admin.ModelAdmin):
+#    filter_horizontal = ('students',)
+#    list_filter = ('tutor', 'students',)
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Guardian)
@@ -71,7 +72,7 @@ admin.site.register(Exam, ExamAdmin)
 admin.site.register(Batch, BatchAdmin)
 admin.site.register(FullLengthTest, FullLengthTestAdmin)
 admin.site.register(SectionalTest, SectionalTestAdmin)
-
 admin.site.register(StudentWorksheet)
 admin.site.register(Attendance, AttendanceAdmin)
-admin.site.register(FeedbackSession, FeedbackSessionAdmin)
+
+#admin.site.register(FeedbackSession, FeedbackSessionAdmin)

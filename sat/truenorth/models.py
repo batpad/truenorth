@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from ox.django.fields import DictField
 
+
 class Student(models.Model):
     user = models.ForeignKey(User)
     full_name = models.CharField(max_length=255, blank=True)
@@ -15,9 +16,10 @@ class Student(models.Model):
     sectional_tests = models.ManyToManyField("SectionalTest", through="StudentSectionalTest")
     completed = models.BooleanField(default=False)
 
-
     def __unicode__(self):
         return self.full_name
+
+
 
 class Tutor(models.Model):
     user = models.ForeignKey(User)
