@@ -132,7 +132,7 @@ ROOT_URLCONF = 'sat.urls'
 
 # Setting Auth_User_Model 
 
-AUTH_USER_MODEL = 'sat.login'
+AUTH_USER_MODEL = 'login.MyUser'
 
 
 # Python dotted path to the WSGI application used by Django's runserver.

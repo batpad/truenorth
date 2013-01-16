@@ -4,7 +4,7 @@ from ox.django.fields import DictField
 
 
 class Student(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(MyUser)
     full_name = models.CharField(max_length=255, blank=True)
     centre = models.ForeignKey("Centre")
     address = models.TextField(blank=True)
