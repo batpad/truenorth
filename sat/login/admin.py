@@ -1,64 +1,83 @@
+from django import forms
 from django.contrib import admin
-from django.conf import settings
-from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
- 
-class MyUserManager(BaseUserManager):
-    def create_user(self, email, password=None):
-        if not email:
-            raise ValueError('Users must have an email address')
- 
-        user = self.model(
-            email=MyUserManager.normalize_email(email),
-        )
- 
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
- 
-    def create_superuser(self, email, password):
-        user = self.create_user(email,
-            password=password,
-        )
-        user.is_admin = True
-        user.save(using=self._db)
-        return user
- 
- 
-class MyUser(AbstractBaseUser):
-    email = models.EmailField(max_length=254, unique=True, db_index=True)
- 
-    is_active = models.BooleanField(default=True)
-    is_admin = models.BooleanField(default=False)
- 
-    objects = MyUserManager()
- 
-    USERNAME_FIELD = 'email'
- 
-    def get_full_name(self):
-        # For this case we return email. Could also be User.first_name User.last_name if you have these fields
-        return self.email
- 
-    def get_short_name(self):
-        # For this case we return email. Could also be User.first_name if you have this field
-        return self.email
- 
-    def __unicode__(self):
-        return self.email
- 
-    def has_perm(self, perm, obj=None):
-        # Handle whether the user has a specific permission?"
-        return True
- 
-    def has_module_perms(self, app_label):
-        # Handle whether the user has permissions to view the app `app_label`?"
-        return True
- 
-    @property
-    def is_staff(self):
-        # Handle whether the user is a member of staff?"
-        return self.is_admin
- 
+from django.contrib.auth.models import Group
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-admin.site.register( MyUser )
-#admin.site.register( MyUserManager)
+from models import MyUser
+
+
+class UserCreationForm(forms.ModelForm):
+    """A form for creating new users. Includes all the required
+    fields, plus a repeated password."""
+    password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Password confirmation', widget=forms.PasswordInput)
+
+    class Meta:
+        model = MyUser
+        fields = ('email','user_type')
+
+    def clean_password2(self):
+        # Check that the two password entries match
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Passwords don't match")
+        return password2
+
+    def save(self, commit=True):
+        # Save the provided password in hashed format
+        user = super(UserCreationForm, self).save(commit=False)
+        user.set_password(self.cleaned_data["password1"])
+        if commit:
+            user.save()
+        return user
+
+
+class UserChangeForm(forms.ModelForm):
+    """A form for updating users. Includes all the fields on
+    the user, but replaces the password field with admin's
+    password hash display field.
+    """
+    password = ReadOnlyPasswordHashField()
+
+    class Meta:
+        model = MyUser
+
+    def clean_password(self):
+        # Regardless of what the user provides, return the initial value.
+        # This is done here, rather than on the field, because the
+        # field does not have access to the initial value
+        return self.initial["password"]
+
+
+class MyUserAdmin(UserAdmin):
+    # The forms to add and change user instances
+    form = UserChangeForm
+    add_form = UserCreationForm
+
+    # The fields to be used in displaying the User model.
+    # These override the definitions on the base UserAdmin
+    # that reference specific fields on auth.User.
+    list_display = ('email', 'user_type', 'is_admin')
+    list_filter = ('is_admin',)
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        ('Permissions', {'fields': ('is_admin','user_type',)}),
+        ('Important dates', {'fields': ('last_login',)}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'user_type', 'password1', 'password2')}
+        ),
+    )
+    search_fields = ('email',)
+    ordering = ('email',)
+    filter_horizontal = ()
+
+# Now register the new UserAdmin...
+admin.site.register(MyUser, MyUserAdmin)
+# ... and, since we're not using Django's builtin permissions,
+# unregister the Group model from admin.
+admin.site.unregister(Group)

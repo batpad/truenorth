@@ -2,7 +2,7 @@
 import os
 from os.path import join
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 JSON_DEBUG = DEBUG
