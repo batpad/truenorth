@@ -41,9 +41,9 @@ class MyUser(AbstractBaseUser):
         db_index=True,
     )
 
-    usertype =((1, 'TEACHER'),
-              (2, 'STUDENT'),
-              (3, 'GAURDIAN')) 
+    usertype =(('1', 'TEACHER'),
+              ('2', 'STUDENT'),
+              ('3', 'GAURDIAN')) 
 
 
     user_type = models.CharField(max_length=10, choices=usertype)

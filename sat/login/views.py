@@ -27,7 +27,11 @@ def login_user(request):
                     if User_Instance == "STUDENT":
                         return HttpResponse("Student")
                     else:
-                        return HttpResponseRedirect('/admin/')    # redirect according to user type 
+			if User_Instance == "GAURDIAN":
+				return HttpResponse("Gaurdian")
+			
+			else: 	
+	                        return HttpResponseRedirect('/admin/')    # redirect according to user type 
 
             else:
                 state = "Your account is not active, please contact the site admin."
