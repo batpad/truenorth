@@ -40,7 +40,13 @@ class MyUser(AbstractBaseUser):
         unique=True,
         db_index=True,
     )
-    user_type = models.CharField(max_length=10)
+
+    usertype =((1, 'TEACHER'),
+              (2, 'STUDENT'),
+              (3, 'GAURDIAN')) 
+
+
+    user_type = models.CharField(max_length=10, choices=usertype)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
