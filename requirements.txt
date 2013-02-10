@@ -1,4 +1,4 @@
-git+git://github.com/django/django.git@1.5b2
+http://www.djangoproject.com/m/releases/1.5/Django-1.5c1.tar.gz
 ox
 django-admin-sortable
 django_extensions
