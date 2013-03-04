@@ -1,0 +1,37 @@
+Truenorth JSON API:
+/api/
+    methods:
+        #CHECK-INS#
+
+        /check-ins GET: retrieve a list of checkin objects based on query params / user permissions
+            - date_from (default: today minus one week?)
+            - date_to (default: today)
+            - user (check permissiong, get checkins for this user)
+            - centre (check permissions, get all checkins for centre - if office staff, return tutors + students, if tutor, return only students)
+                        
+        /check-ins POST: create a new check-in entry (check perms and save in db)
+            - datetime_from
+            - datetime_to (optional)
+            - user
+            - notes
+            - entered_by (user who makes the request)
+            
+        /check-ins/<id> PUT: edit check-in with <id>
+            - datetime_from
+            - datetime_to
+            - notes
+            - last_changed_by (user who makes the request)
+
+        /check-ins/<id> DELETE: delete check-in with <id>
+
+
+        #AUTOCOMPLETES#
+
+        /tutors/
+            - q (word fragment to search, can be empty)
+            - centre (filter by centre)
+        
+        /students/
+            - q (word fragment to search, can be empty)
+            - centre (filter by centre)
+

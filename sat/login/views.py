@@ -18,20 +18,24 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 state = "You're successfully logged in!"
-                
-                # For checking type of user 
-                User_Instance=MyUser.objects.get(email=username).get_category()
-                if User_Instance == "TEACHER":
-                    return HttpResponse("Teacher")
-                else:
-                    if User_Instance == "STUDENT":
-                        return HttpResponse("Student")
-                    else:
-			if User_Instance == "GAURDIAN":
-				return HttpResponse("Gaurdian")
-			
-			else: 	
-	                        return HttpResponseRedirect('/admin/')    # redirect according to user type 
+                user_type = user.user_type
+                if user_type != 'unknown':
+                    redirect_url = "/home/%s" % user_type
+                    return HttpResponseRedirect(redirect_url)
+#                
+#                # For checking type of user 
+#                User_Instance=MyUser.objects.get(email=username).get_category()
+#                if User_Instance == "":
+#                    return HttpResponse("Teacher")
+#                else:
+#                    if User_Instance == "STUDENT":
+#                        return HttpResponse("Student")
+#                    else:
+#			if User_Instance == "GAURDIAN":
+#				return HttpResponse("Gaurdian")
+#			
+#			else: 	
+#	                        return HttpResponseRedirect('/admin/')    # redirect according to user type 
 
             else:
                 state = "Your account is not active, please contact the site admin."

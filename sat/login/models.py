@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
+from sat.truenorth.models import *
 
 
 class MyUserManager(BaseUserManager):
@@ -46,13 +47,28 @@ class MyUser(AbstractBaseUser):
               ('3', 'GAURDIAN')) 
 
 
-    user_type = models.CharField(max_length=10, choices=usertype)
+#    user_type = models.CharField(max_length=10, choices=usertype)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
+
+    @property
+    def user_type(self):
+        if Student.objects.filter(user=self).count() > 0:
+            return 'student'
+        elif Tutor.objects.filter(user=self).count() > 0:
+            return 'tutor'
+        elif Guardian.objects.filter(user=self).count() > 0:
+            return 'guardian'
+        elif self.is_admin:
+            return 'admin'
+        elif self.is_staff:
+            return 'staff'
+        else:
+            return 'unknown'
 
     def get_category(self):
         return self.user_type
