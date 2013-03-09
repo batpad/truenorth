@@ -4,9 +4,10 @@ from ox.django.fields import DictField
 from django.conf import settings
 
 class Student(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)
-    centre = models.ForeignKey("Centre")
+#    centres = models.ManyToManyField("Centre")
+    centre = models.ForeignKey("Centre") #TODO: FIXME
     address = models.TextField(blank=True)
     guardian = models.ForeignKey("Guardian", blank=True, null=True)    
     exams = models.ManyToManyField("Exam", through="StudentExam")
@@ -22,7 +23,7 @@ class Student(models.Model):
 
 
 class Tutor(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)
 
     def __unicode__(self):
@@ -33,7 +34,7 @@ class Guardian(models.Model):
     '''
         Parent / guardian
     '''
-    user = models.ForeignKey(settings.AUTH_USER_MODEL)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)    
 
     def __unicode__(self):
@@ -218,9 +219,12 @@ class Checkin(models.Model):
     '''
     Model for office staff to simply enter a user (can be student or tutor) and time in. Time-out is optional.
     '''
+    centre = models.ForeignKey(Centre)
     user = models.ForeignKey(settings.AUTH_USER_MODEL)
     time_in = models.DateTimeField() #FIXME: add default for datetime.datetime.now?
     time_out = models.DateTimeField(blank=True, null=True)
+    marked_by = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='marked_checkins')
+    
 
     def __unicode__(self):
         dtstring = self.time_in.strftime("%d %b, %Y at %H:%M")
