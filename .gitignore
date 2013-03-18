@@ -6,3 +6,4 @@ lib/
 local/
 tmp/
 local_settings.py
+secret.txt
