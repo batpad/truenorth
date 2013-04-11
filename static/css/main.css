@@ -1,115 +1,468 @@
+/* fix ellipses issue on lists and add break word */
+
 * {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	
-	box-sizing: border-box; 
+    font-family: Lato, sans-serif;
 }
 
-html, body  { 
-	height: 100%;
-	width: 100%;
+@font-face {
+	font-family: 'icomoon';
+	src:url('../../static/fonts/icomoon.eot');
+	src:url('../../static/fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../../static/fonts/icomoon.woff') format('woff'),
+		url('../../static/fonts/icomoon.ttf') format('truetype'),
+		url('../../static/fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
-body {
-	background-color: #fff;
-	font-family:sans-serif;
-	color: #222;
-	font-size: 16px;
-	line-height: 1.4;
+.fontIcons, .presentIconRed, .presentIconGreen {
+    font-family: icomoon;
 }
 
-/* COLUMNS */
-
-/*.col25 {
-	width: 25%;
+.clear {
+    clear: both;
 }
 
-.col33 {
-	width:33.33%;
+.strong {
+    font-weight: 700;
 }
 
-.col50 {
-	width: 50%;
+.uppercase {
+    text-transform: uppercase;
 }
 
-.col75 {
-	width:75%;
-}
-*/
-
-/* COLUMNS */
-
-/* GLOBAL STYLES */
-
-
-.clear { 
-	clear: both;
-} 
-
-a {
-  text-decoration: none;
+.floatLeft {
+    float: left;
 }
 
-a:hover, a:focus {
+.floatRight {
+    float: right;
 }
 
-strong {
-	font-weight: bold;
+.ui-body, .ui-mobile-viewport, .ui-page {
+    color: #444;
 }
 
-em {
-	font-style: italic;
+.ui-mobile-viewport {
+    background: #ddd;
 }
 
-
-h1, h2, h3, h4, h5, h6 {
-	padding-bottom:10px;
+.smallFont {
+    font-size: 90%;    
 }
 
-h6 {
-	font-size: 110%;
+.smallerFont {
+    font-size: 80%;
 }
 
-h5 {
-	font-size: 120%;
+.center {
+    text-align: center;
 }
 
-h4 {
-	font-size: 130%;
+.notify {
+    text-shadow: none;
+    padding: 12px 4px;
+    color: #fff;
+    border: 1px solid #fff;
+    text-align: center;
+    background: #f6c74b;
 }
 
-h3 {
-	font-size: 140%;
+.notify p {
+    margin: 0;
 }
 
-h2 {
-	font-size: 150%;
+.ui-page {
+    max-width: 1000px;
+    background: #e5e5e5;
 }
 
-h1 {
-	font-size: 160%;
+.ui-mobile [data-role="page"], .ui-mobile [data-role="dialog"], .ui-page {
+    margin: 0 auto;
+    position: static; /* hack to horizontally center */
 }
 
-
-img {
-	max-width: 100%;
-	height: auto;
+.listWhiteGradient .buttonCustom a {
+    color: #fff;
 }
 
-input[type="submit"] {
-	cursor: pointer;
+.listWhiteGradient .buttonCustom {
+    margin: 30px 0 0 0;
 }
 
-textarea {
-	vertical-align: top;
+.loginForm {
+    background: transparent;
+    border: none;
 }
 
-/* END GLOBAL STYLES */
+.ui-btn-up-b, .ui-btn-hover-b {
+    border: none;
+}
+
+/* header */
+
+.ui-header {
+    background: #CA252B;
+    border: none;
+    padding: 26px 0 4px 0;
+    color: #eee;
+    text-shadow: none;    
+}
+
+.ui-header .ui-btn-left, .ui-header .ui-collapsible {
+    top: 79px;
+}
+
+.ui-header .ui-btn-left {
+    left: 0;
+}
+
+.ui-header .ui-collapsible {
+    position: absolute;
+    right: 0;
+    margin: 0;
+    z-index: 200;
+}
+
+.ui-header .ui-btn .ui-icon {
+    background-image: url('../images/icons-18-white.png');
+}
+
+#header a {
+    color: #fff;
+    text-decoration: none; 
+}
+
+#header .userDetails a {
+    text-decoration: underline;
+}
+
+#menuMain li .ui-icon {
+    display: none;
+}
+
+#menuMain li .ui-btn-inner {
+    padding-right: 0;
+}
+
+.userDetails {
+    position: absolute;
+    right: 6px;
+    top: 0;
+    line-height: 1;
+    margin: 0;
+    padding: 8px 0 0 0;
+    font-style: italic;
+}
+
+.userDetails span {
+    display: inline-block;    
+}
+
+.userDetails span:first-of-type{
+    padding-right: 5px;
+    display: inline-block;
+}
+
+.userDetails span:last-of-type{
+    padding-left: 5px;
+}
+
+.ui-mobile .ui-header h2 {
+    font-size: 130%;
+    margin: .1em 30% .2em;
+    font-weight: normal;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto;
+}
+
+/* end header */
 
 
-/* MEDIA QUERIES */
+/* end footer */
 
-/*@media only screen and (max-width: 980px) {
-}*/
+.ui-footer {
+    text-shadow: none;
+    border: none;
+    background: #9FBE41;
+    padding: 3px 3px 5px 3px;   
+}
 
-/* END MEDIA QUERIES */
+.ui-footer p {
+    padding: 4px 0;
+    font-weight: normal;
+}
+
+#footer a {
+    color: #fff;    
+}
+
+/* end footer */
+
+
+/* content */
+
+.headingContent {
+    font-size: 130%;
+    font-weight: 700;
+    line-height: 1.1;
+    margin: 16px 0 32px;
+    text-align: center;
+    text-shadow: none;
+}
+
+.listWhiteGradient li {
+    padding: 4px 18px;
+    cursor: default;
+	background: #f9f9f9;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #f9f9f9), to( #eee));
+	background-image: -webkit-linear-gradient( #f9f9f9, #eee);
+	background-image: linear-gradient( #f9f9f9, #eee);
+}
+
+/* .listWhiteGradient li:hover, .listWhiteGradient li:active {
+    background: #eee;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #f0f0f0), to( #ddd));
+    background-image: -webkit-linear-gradient( #f0f0f0, #ddd);
+    background-image: linear-gradient( #f0f0f0, #ddd);
+}
+ */
+.listWhiteGradient li p {
+    line-height: 1.4;
+    font-size: 90%;
+}
+
+.ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
+    padding: 0.5em 15px;
+}
+
+.courseListLabel {
+    padding: 10px 0 8px 0;
+    display: block;
+    float: left;
+}
+
+.courseList {
+    width: 78%;
+    float: right;
+    margin: 0;
+}
+
+.courseList .ui-btn-inner {
+    padding: .5em 20px;
+}
+
+/* end content */
+
+
+/* form elements */
+
+.ui-field-contain label.ui-input-text, .ui-field-contain label.ui-select {
+    vertical-align: middle;
+}
+
+.ui-field-contain .ui-input-text {
+    border-radius: 0;
+}
+
+.ui-input-text.ui-focus, .ui-focus {
+    box-shadow: inset 2px 2px 10px rgba(0,0,0,0.2) !important;
+}
+
+.ui-select .ui-btn-inner {
+    padding-top: 0.4em;
+    padding-bottom: 0.5em;
+}
+
+.selectCenter .ui-select {
+    width: 100%;
+}
+
+.listAttendance .ui-checkbox {
+    float: right;
+}
+/* end form elements */
+
+/* buttons and icons */
+
+.presentIconRed, .presentIconGreen {
+    color: #fff;
+    font-weight: normal;
+    font-size: 80%;
+    padding: 4px;
+    margin: 0 0 0 6px;
+}
+
+.presentIconRed {
+    background: rgb(202,37,43);
+}
+
+.presentIconGreen {
+    background: #7eca25;
+}
+
+.ui-icon, .ui-icon-searchfield::after {
+    background-image: url('../images/icons-18-black.png');
+    background-color: transparent;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+#menuOptAccordion h2 .ui-icon {
+    background-image: url('../images/icons-18-white.png');
+}
+
+.ui-btn-up-a {
+    background: #bbb;
+    border: none;
+    text-shadow: none;
+    color: #777;
+}
+
+.ui-btn-icon-notext .ui-btn-inner .ui-icon {
+    /* margin: 2px 1px 2px 2px; */
+}
+
+.ui-btn-up-e, .ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active, .ui-btn-hover-e:visited, .ui-header .ui-btn {
+    color: #fff;
+    text-shadow: none;
+    border: none;
+    border-radius: 0;
+    background: #1b2670;
+}
+
+.ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active .ui-btn-up-e, .ui-header .ui-btn:hover {
+    background: #0962b5;
+}
+
+.ui-corner-all, .ui-btn-corner-all {
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+
+.ui-controlgroup-vertical .ui-btn {
+    border-bottom-width: 1px;
+}
+
+.ui-btn-up-b, .buttonCustom, .controlTabs a:hover {
+    background: #363590;
+}
+
+.buttonCustom .ui-btn-inner {
+    padding: 0;
+    border-top: none;
+    text-shadow: none;
+}
+
+.controlTabs a:hover {
+    text-shadow: none;
+    color: #fff;
+}
+
+.buttonCustom a {
+    padding: 6px 8px;
+}
+
+.ui-btn-hover-b, .buttonCustom:hover {
+    background: #335cba;
+}
+
+/* end buttons and icons */
+
+/* popup */
+
+
+.ui-popup .ui-btn {
+    text-transform: uppercase;
+}
+
+.ui-popup-screen.in {
+    opacity: 0.7;
+    filter: Alpha(Opacity=70);
+}
+
+.popupDiv {
+    padding: 10px 20px;
+}
+
+.ui-popup h3:first-of-type {
+    text-transform: uppercase;
+    font-size: 120%;
+    padding: 6px;
+    margin: 10px 6px;
+}
+
+.popupDiv .ui-input-search, div.ui-input-text, .popupDiv .ui-btn {
+    margin: 0.8em 0;
+}
+
+.ui-popup .coursesEnrolledLink {
+    text-transform: capitalize;
+    color: #999;
+}
+
+.cancelPopup {
+    position: absolute;
+    right: -10px;
+    top: -20px;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+}
+
+.ui-popup-screen {
+    position: fixed; /* changed to allow overlay to span full height  */
+}
+
+/* #studentAttPopup {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+}
+ */
+/* end popup */
+
+
+/* calendar */
+
+.dateAttendanceList {
+    width: 38%;
+    margin-top: 30px;
+}
+
+.dateAttendanceList .ui-li .ui-btn-inner a.ui-link-inherit {
+    padding: 0.3em 15px;
+}
+
+/* .dateCalendar {
+    width: 60%;
+}
+ */
+.dateAttendanceUl h2 {
+    padding-bottom: 10px;
+}
+
+.dateAttendanceUl p {
+    font-size: 90%;
+}
+
+#custom-next {
+    padding: 0 0 12px 0;
+}
+
+/* end calendar */
+
+
+/* media queries */
+
+@media all and (max-width: 447px){
+    .courseList, .courseListLabel {
+        float: left;
+        width: 100%;
+    }
+}
+
+/* end media queries */
