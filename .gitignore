@@ -7,3 +7,5 @@ local/
 tmp/
 local_settings.py
 secret.txt
+Scripts/
+truenorth.dev
