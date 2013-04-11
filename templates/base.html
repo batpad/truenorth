@@ -58,6 +58,23 @@
 <div data-role="page" id="loginScreen" class="pageEach">
     
     <div data-role="header" id="header">
+        {% block login %}
+            <a href="index.html" data-role="button" data-theme="b" data-inline="true" data-rel="back" data-icon="back" data-iconpos="right" class="btnBack">Back</a>
+            <p class="smallerFont userDetails"><span>Jogesh Motwani</span> | <span>Colaba</span> | <span><a href="" class="white">Logout</a></span></p>
+
+        <div data-role="collapsible" data-mini="true" data-theme="b" data-content-theme="a" data-collapsed-icon="bars" data-expanded-icon="bars" data-iconpos="right" id="menuMain">
+            <h4>Menu</h4>
+            <ul data-role="listview">
+                <li><a href="#">Mark attendance</a></li>
+                <li><a href="#">View attendance</a></li>
+                <li><a href="#">View Profiles</a></li>
+                <li><a href="#">Add Profile</a></li>
+                <li><a href="#">Change Centre</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div> <!-- end menu main  -->
+
+        {% endblock %}
         <div class="headerLogo center">
             <a href="#loginScreen">
                 <img src="static/img/logo.png" alt="logo-true-north" width="50" height="48" class="logo">
@@ -67,6 +84,8 @@
     </div> <!-- end header  -->
 
     <div data-role="content" id="content">
+    {% block content %}
+    {% endblock %}
     </div> <!-- end content  -->
 
     <div data-role="footer" id="footer" class="smallFont center">
