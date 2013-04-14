@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <h3 class="headingContent">Select an option</h3>
+
+
+	<!-- This is not working and I dont know why -->
+        <h3 class="headingContent">{{request.session.center}}</h3>
+
+        <div data-role="collapsible-set" data-theme="b" data-content-theme="c" id="menuOptAccordion" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
+            <div data-role="collapsible">
+                <h2>Attendance</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="#attendanceStudents">Students</a></li>
+                    <li><a href="#attendanceTutors">Tutors</a></li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h2>View Profiles</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="/staff/">Staff</a></li>
+                    <li><a href="#viewProfileTutor">Tutors</a></li>
+                    <li><a href="/students/">Students</a></li>
+                    <li><a href="#viewProfileParent">Parents</a></li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h2>Add Profile</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="#profileStaff">Staff</a></li>
+                    <li><a href="#profileTutor">Tutors</a></li>
+                    <li><a href="/student/add/">Students</a></li>
+                    <li><a href="#profileParent">Parents</a></li>
+                </ul>
+            </div>
+        </div>
+        
+    
+{% endblock %}
+
+
+

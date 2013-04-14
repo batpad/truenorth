@@ -1,10 +1,38 @@
 from models import *
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext
 from ox.django.shortcuts import render_to_json_response
 import datetime
 
 def home(request, user_type):
     return HttpResponse("you are a %s" % user_type)
+
+# DO NOT USE THE FOLLOWING VIEW !
+def students(request):
+    return HttpResponse("We are students of true north")
+def viewstafflist(request):
+    staff = Staff.objects.all()
+
+    return render_to_response('view_profile_staff.html',{'staff':staff}, context_instance=RequestContext(request))
+
+def viewstudentlist(request):
+    students = Student.objects.all()
+
+    return render_to_response('view_profile_students.html',{'students':students}, context_instance=RequestContext(request))
+
+def menu(request):
+    return render_to_response('menu.html', context_instance=RequestContext(request))
+    
+
+
+def selectcenter(request):
+    if request.GET:
+        center = request.GET.get('center')
+        request.session["center"] = center
+        return HttpResponseRedirect("/menu/")
+    return render_to_response('selectcenter.html', context_instance=RequestContext(request))
+
 
 def checkin(request):
     user = request.GET.get("user", None)

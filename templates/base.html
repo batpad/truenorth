@@ -5,7 +5,7 @@
 
 <meta charset="utf-8">
 
-<title>rue North Learning Systems {% block extra_title %}{% endblock %}</title>
+<title>True North Learning Systems {% block extra_title %}{% endblock %}</title>
 
 <meta name="keywords" content="True North, Attendance, Worksheets, Tutorials, Study Abroad, SAT Tests">
 <meta name="title" content="True North Learning Systems: Web Application"> 
@@ -60,8 +60,8 @@
     <div data-role="header" id="header">
         {% block login %}
             <a href="index.html" data-role="button" data-theme="b" data-inline="true" data-rel="back" data-icon="back" data-iconpos="right" class="btnBack">Back</a>
-            <p class="smallerFont userDetails"><span>Jogesh Motwani</span> | <span>Colaba</span> | <span><a href="" class="white">Logout</a></span></p>
-
+            <p class="smallerFont userDetails"><span>{% if user.is_authenticated %}{{ user.email }} </span> | <span>{% if request.session.center %}{{ request.session.center }} {% else %}Colaba{% endif %}</span> | <span><a href="/login/logout/" class="white">Logout</a>{% else %} Not logged in {% endif %}</span></p>
+{% if user.is_authenticated %}
         <div data-role="collapsible" data-mini="true" data-theme="b" data-content-theme="a" data-collapsed-icon="bars" data-expanded-icon="bars" data-iconpos="right" id="menuMain">
             <h4>Menu</h4>
             <ul data-role="listview">
@@ -73,11 +73,12 @@
                 <li><a href="#">Logout</a></li>
             </ul>
         </div> <!-- end menu main  -->
+{% endif %}
 
         {% endblock %}
         <div class="headerLogo center">
             <a href="#loginScreen">
-                <img src="static/img/logo.png" alt="logo-true-north" width="50" height="48" class="logo">
+                <img src="/static/img/logo.png" alt="logo-true-north" width="50" height="48" class="logo">
                 <h2>TRUE NORTH</h2>
             </a>
         </div> <!-- end header logo  -->
