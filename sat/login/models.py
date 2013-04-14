@@ -42,9 +42,12 @@ class MyUser(AbstractBaseUser):
         db_index=True,
     )
 
-    usertype =(('1', 'TEACHER'),
-              ('2', 'STUDENT'),
-              ('3', 'GAURDIAN')) 
+    usertype =(
+        ('1', 'TEACHER'),
+        ('2', 'STUDENT'),
+        ('3', 'GAURDIAN'),
+        ('4', 'STAFF')
+               ) 
 
 
 #    user_type = models.CharField(max_length=10, choices=usertype)
@@ -63,6 +66,8 @@ class MyUser(AbstractBaseUser):
             return 'tutor'
         elif Guardian.objects.filter(user=self).count() > 0:
             return 'guardian'
+        elif Staff.objects.filter(user=self).count() > 0:
+            return 'superuser'
         elif self.is_admin:
             return 'admin'
         elif self.is_staff:

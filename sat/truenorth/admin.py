@@ -19,6 +19,10 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ('centre',)
     save_on_top = True
 
+class StaffAdmin(admin.ModelAdmin):
+    search_fields = ['full_name']
+
+
 class TutorAdmin(admin.ModelAdmin):
     search_fields = ['full_name']
 
@@ -74,5 +78,6 @@ admin.site.register(FullLengthTest, FullLengthTestAdmin)
 admin.site.register(SectionalTest, SectionalTestAdmin)
 admin.site.register(StudentWorksheet)
 admin.site.register(Attendance, AttendanceAdmin)
+admin.site.register(Staff, StaffAdmin)
 
 #admin.site.register(FeedbackSession, FeedbackSessionAdmin)

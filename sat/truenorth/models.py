@@ -17,6 +17,15 @@ class Student(models.Model):
     sectional_tests = models.ManyToManyField("SectionalTest", through="StudentSectionalTest")
     completed = models.BooleanField(default=False)
 
+    @property
+    def get_type(self):
+        return self.user.user_type
+    @property
+    def get_email(self):
+        return self.user.email
+
+
+
     def __unicode__(self):
         return self.full_name
 
@@ -26,8 +35,33 @@ class Tutor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)
 
+    @property
+    def get_type(self):
+        return self.user.user_type
+
+
     def __unicode__(self):
         return self.full_name
+
+class Staff(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    full_name = models.CharField(max_length=255, blank=True)
+    pan_number = models.CharField(max_length=12, blank=True)
+    cell_number = models.CharField(max_length=10, blank=True)
+    landline = models.CharField(max_length=12, blank=True)
+    
+    @property
+    def get_email(self):
+        return self.user.email
+
+    @property
+    def get_type(self):
+        return self.user.user_type
+
+    
+    def __unicode__(self):
+        return self.full_name
+
 
 
 class Guardian(models.Model):
@@ -36,6 +70,10 @@ class Guardian(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)    
+
+    @property
+    def get_type(self):
+        return self.user.user_type
 
     def __unicode__(self):
         return self.full_name
