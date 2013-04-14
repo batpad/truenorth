@@ -1,5 +1,5 @@
 from django.conf.urls import patterns, include, url                           
-from views import login_user
+from views import login_user,logout_user
 
 
 urlpatterns = patterns('',
@@ -14,5 +14,7 @@ url(r'^login/password/reset/$',
         {'post_reset_redirect' : '/user/password/done/'}),
     (r'^login/password/done/$', 
         'django.contrib.auth.views.password_reset_complete'),
-    (r'^login/$', login_user),
+    (r'^$', login_user),
+
+
 )
