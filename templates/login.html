@@ -3,7 +3,7 @@
 {% block content %}
 
         <h3 class="headingContent">Login</h3>
-	{{ state }}
+		<div class="notify">{{ state }}</div>
         <form action="/login/" class="loginForm" method="post">
 	   {% csrf_token %}
 	   {% if next %}
@@ -12,12 +12,12 @@
 
             <div data-role="fieldcontain">
                 <label for="username-login">Username</label>
-                <input type="text" name="username" id="username-login" value="">
+                <input type="text" name="username" id="username-login" value="" required>
             </div>
     
             <div data-role="fieldcontain">
                 <label for="username-password">Password:</label>
-                <input type="password" name="password" id="username-password" value="" autocomplete="off">             
+                <input type="password" name="password" id="username-password" value="" autocomplete="off" required>             
             </div>
             <div class="center">
 
