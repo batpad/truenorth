@@ -7,8 +7,11 @@ class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)
 #    centres = models.ManyToManyField("Centre")
-    centre = models.ForeignKey("Centre") #TODO: FIXME
+    centre  = models.CharField(max_length=255, blank=True)
+    # centre = models.ForeignKey("Centre") # TODO: FIXME
     address = models.TextField(blank=True)
+    school = models.CharField(max_length=255, blank=True)
+    office_number = models.CharField(max_length=12, blank=True)
     guardian = models.ForeignKey("Guardian", blank=True, null=True)    
     exams = models.ManyToManyField("Exam", through="StudentExam")
     courses = models.ManyToManyField("Course", through="StudentCourse")
