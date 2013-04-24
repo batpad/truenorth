@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block extra_css %}
+<style>
+.fc-calendar-container {
+	width: auto;
+}
+
+@media screen and (max-width: 500px) {
+	.fc-calendar-container {
+		width: auto;
+	}
+}
+</style>
+{% endblock %}
+
+
+{% block content %}
+<h3 class="center headingContent">View attendance</h3>
+
+<ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" class="dateAttendanceUl listWhiteGradient">
+	<li data-icon="false" class="center">
+			<h2>Kabir Kukreti</h2>
+			<p><strong>Attended 10 days over the last 3 months.</strong></p>
+			<p><strong>Last month:</strong> some data here</p>
+			<p><strong>Weekly:</strong> some data here</p>
+	</li>            
+</ul>
+
+	<div class="dateCalendar">
+		<div class="main">
+			<div class="custom-calendar-wrap">
+				<div id="custom-inner" class="custom-inner">
+					<div class="custom-header clearfix">
+						<nav>
+							<span id="custom-prev" class="custom-prev"></span>
+							<span id="custom-next" class="custom-next"></span>
+							<span id="custom-current" class="custom-current" title="Got to current date">Today</span>
+						</nav>
+						<h2 id="custom-month" class="custom-month"></h2>
+						<h3 id="custom-year" class="custom-year"></h3>
+					</div> <!-- end custom header  -->
+					<div id="calendar" class="fc-calendar-container"></div>
+				</div> <!-- end custom inner  -->
+			</div> <!-- end custom calendar wrap  -->
+		</div> <!-- end main  -->                            
+	</div> <!-- end date calendar  -->
+
+{% endblock %}
+
+
+
