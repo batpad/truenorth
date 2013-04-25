@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated  %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+        <h3 class="headingContent">Add Profile: Student</h3>
+        
+        <div data-role="controlgroup" class="center controlTabs">
+            <a href="#profileStaff" data-role="button" data-inline="true">Staff
+            </a><a href="#profileTutor" data-role="button" data-inline="true">Tutor
+            </a><a href="#profileStudent" data-role="button" data-theme="b" data-inline="true">Student
+            </a><a href="#profileParent" data-role="button" data-inline="true">Parent</a>
+        </div>    
+
+        <form data-ajax="false" action="\" method="post">
+	  {% csrf_token %}
+            <div data-role="fieldcontain">
+
+                <label for="">Title:</label>
+                <select name="title" id="">
+                    <option value="Mr">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Dr.">Dr.</option>
+                    <option value="Prof.">Prof.</option>
+                </select>
+            </div>
+                        
+            <div data-role="fieldcontain">
+                <label for="">First Name</label>
+                <input type="text" name="first_name" id="" placeholder="" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Last Name</label>
+                <input type="text" name="last_name" id="" placeholder="" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Address</label>
+                <input type="text" name="address" id="" placeholder="" value="">
+            </div>
+            
+            <div data-role="fieldcontain">
+                <label for="">Email</label>
+                <input type="email" name="email" id="" placeholder="" value="" required>
+            </div>
+ 
+            <div data-role="fieldcontain">
+                <label for="">Mobile No.</label>
+                <input type="tel" name="mobile" id="" placeholder="" value=""  required>
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Landline No.</label>
+                <input type="tel" name="landline" id="" placeholder="" value="">
+            </div>
+
+           <div data-role="fieldcontain">
+                <label for="">Centre:</label>
+		
+                <select name="centre" id="">
+		  {% for centre in centres %}
+                    <option value="{{centre.id}}">{{centre.name}}</option>
+		  {% endfor %}
+                </select>
+            </div>
+	          
+
+
+            <!-- <div data-role="fieldcontain"> -->
+            <!--     <label for="">Centre</label> -->
+            <!--     <input type="text" name="centre" id="" placeholder="" value=""> -->
+            <!-- </div> -->
+
+            <div data-role="fieldcontain">
+                <label for="">Office No.</label>
+                <input type="tel" name="office_number" id="" placeholder="" value="">
+            </div>
+            
+            <div data-role="fieldcontain">
+                <label for="">School</label>
+                <input type="tel" name="school" id="" placeholder="" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Guardian Full Name</label>
+                <input type="text" name="guardian_full_name" id="" placeholder="" value="">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Guardian Email</label>
+                <input type="email" name="guardian_email" id="" placeholder="" value="">
+            </div>
+            <div data-role="fieldcontain">
+                <label for="">Gaurdian Telephone</label>
+                <input type="tel" name="guardian_tel" id="" placeholder="" value="">
+            </div>
+
+
+
+
+
+            <div data-role="fieldcontain">
+
+                <label for="">Grade</label>
+                <select name="grade" id="">
+                    <option value="5th">5th</option>
+                    <option value="6th">6th.</option>
+                    <option value="7th">7th.</option>
+                    <option value="8th">8th.</option>
+                    <option value="9th">9th.</option>
+                    <option value="10th">10th.</option>
+                    <option value="11th">11th.</option>
+                    <option value="12th">12th.</option>
+                    <option value="not applicable">Not Applicable</option>
+                </select>
+            </div>
+
+            <div data-role="fieldcontain">
+            <label class="courseListLabel">Courses</label>          
+            <a href="#courseList" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" class="courseList">Courses enrolled</a>
+            <div class="clear"></div>
+            <div data-role="popup" id="courseList" data-theme="d" data-overlay-theme="b" class="ui-content">
+                <form>
+                    <fieldset data-role="controlgroup">
+                        <h3 class="center">Select a course or courses</h3>
+                        <input type="checkbox" name="sat" id="sat">
+                        <label for="sat">SAT</label>
+                        <input type="checkbox" name="act" id="act">
+                        <label for="act">ACT</label>
+                        <input type="checkbox" name="gmat" id="gmat">
+                        <label for="gmat">GMAT</label>
+                        <input type="checkbox" name="gre" id="gre">
+                        <label for="gre">GRE</label>
+                        <input type="checkbox" name="ib1" id="ib1">
+                        <label for="ib1">IB 1</label>
+                        <input type="checkbox" name="ib2" id="ib2">
+                        <label for="ib2">IB 2</label>
+                        <input type="checkbox" name="sat2math1" id="sat2math1">
+                        <label for="sat2math1">SAT 2 Math 1C</label>
+                        <input type="checkbox" name="sat2math2" id="sat2math2">
+                        <label for="sat2math2">SAT 2 Math 1C</label>
+                        <input type="checkbox" name="sat2phy" id="sat2phy">
+                        <label for="sat2phy">SAT 2 Physics</label>
+                        <input type="checkbox" name="sat2chem" id="sat2chem">
+                        <label for="sat2chem">SAT 2 Chemistry</label>
+                        <input type="checkbox" name="sat2lit" id="sat2lit">
+                        <label for="sat2lit">SAT 2 English Lit</label>
+                        <input type="checkbox" name="sat2hist" id="sat2hist">
+                        <label for="sat2hist">SAT 2 US History</label>
+                        <input type="checkbox" name="sat2bio" id="sat2bio">
+                        <label for="sat2bio">SAT Biology</label>
+                        <input type="checkbox" name="igcse" id="igcse">
+                        <label for="igcse">IGCSE</label>
+                        <input type="checkbox" name="ap" id="ap">
+                        <label for="ap">AP</label>
+                        <input type="checkbox" name="alevels" id="alevels">
+                        <label for="alevels">A Levels</label>
+                        <input type="checkbox" name="aslevels" id="aslevels">
+                        <label for="aslevels">AS Levels</label>
+                        <input type="checkbox" name="englishprep" id="englishprep">
+                        <label for="englishprep">English Prep</label>
+                        
+                    </fieldset>
+                              <a href="#" data-rel="back" data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-right cancelPopup">Cancel</a>
+
+
+            </div> <!-- end popup  -->
+            </div> <!-- end fieldcontain  -->  
+          <input type="submit" value="SUBMIT" data-theme="e">
+          <input type="submit" value="CANCEL" data-theme="e">
+
+          </form>
+ 
+   {% else %} 
+	  <p> You do not have  permissions to view this page </p>
+   {% endif %}
+
+{% else %} 
+<p> You have not logged in.Please <a href="/login/">log in</a> </p>
+{% endif %}
+
+
+
+
+
+        
+    
+{% endblock %}
+
+
+
