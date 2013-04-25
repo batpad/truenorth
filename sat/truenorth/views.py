@@ -24,6 +24,7 @@ def viewstudentlist(request):
 
     return render_to_response('view_profile_students.html',{'students':students}, context_instance=RequestContext(request))
 
+
 def edit_student(request,iden):
     # Bloddy edit was such a *** ( oh forget it )
     student = Student.objects.get(id=iden)
@@ -93,12 +94,12 @@ def edit_student(request,iden):
 def add_student(request):
     if request.POST:
 
-
         #Create a user for Student 
         student_email = request.POST['email']
         student_mobile = request.POST['mobile']
         student_user = MyUser.objects.create_user(student_email,student_mobile)
         student_user.save()
+
         
        #Create a guardian
         if request.POST['guardian_email'] and request.POST['guardin_tel']:
@@ -128,11 +129,13 @@ def add_student(request):
         #Create a student
         info_dict={}
         
+
         info_dict['user'] = student_user
         info_dict['title'] = request.POST['title']
         info_dict['first_name'] = request.POST['first_name']
         info_dict['last_name'] = request.POST['last_name']
         info_dict['mobile'] = request.POST['mobile']
+        info_dict['landline'] = request.POST['landline']
         info_dict['grade'] = request.POST['grade']
 
         # info_dict['full_name'] = student_first_name + " " + student_last_name
@@ -141,6 +144,7 @@ def add_student(request):
         info_dict['address'] = request.POST['address']
         info_dict['office_number'] = request.POST['office_number']
         info_dict['guardian'] = guardian
+
         # Get the centre
         centre = Centre.objects.get(id=request.POST['centre'])
         info_dict['centre'] = centre
@@ -151,6 +155,7 @@ def add_student(request):
         
         #Rdirect ot the display page( hopefully we should see it there )
         return HttpResponseRedirect('/students/')
+
     
         #PHEWW :-/
     centres = Centre.objects.all()
