@@ -19,12 +19,12 @@
             <div data-role="fieldcontain">
 
                 <label for="">Title:</label>
-                <select name="" id="">
-                    <option value="">Mr.</option>
-                    <option value="">Ms.</option>
-                    <option value="">Mrs.</option>
-                    <option value="lrge">Dr.</option>
-                    <option value="">Prof.</option>
+                <select name="title" id="">
+                    <option value="Mr">Mr.</option>
+                    <option value="Ms.">Ms.</option>
+                    <option value="Mrs.">Mrs.</option>
+                    <option value="Dr.">Dr.</option>
+                    <option value="Prof.">Prof.</option>
                 </select>
             </div>
                         
@@ -58,10 +58,22 @@
                 <input type="tel" name="landline" id="" placeholder="" value="">
             </div>
 
-            <div data-role="fieldcontain">
-                <label for="">Centre</label>
-                <input type="text" name="centre" id="" placeholder="" value="">
+           <div data-role="fieldcontain">
+                <label for="">Centre:</label>
+		
+                <select name="centre" id="">
+		  {% for centre in centres %}
+                    <option value="{{centre.id}}">{{centre.name}}</option>
+		  {% endfor %}
+                </select>
             </div>
+	          
+
+
+            <!-- <div data-role="fieldcontain"> -->
+            <!--     <label for="">Centre</label> -->
+            <!--     <input type="text" name="centre" id="" placeholder="" value=""> -->
+            <!-- </div> -->
 
             <div data-role="fieldcontain">
                 <label for="">Office No.</label>
@@ -94,16 +106,16 @@
             <div data-role="fieldcontain">
 
                 <label for="">Grade</label>
-                <select name="" id="">
-                    <option value="">5th</option>
-                    <option value="">6th.</option>
-                    <option value="">7th.</option>
-                    <option value="">8th.</option>
-                    <option value="">9th.</option>
-                    <option value="">10th.</option>
-                    <option value="">11th.</option>
-                    <option value="">12th.</option>
-                    <option value="">Not Applicable</option>
+                <select name="grade" id="">
+                    <option value="5th">5th</option>
+                    <option value="6th">6th.</option>
+                    <option value="7th">7th.</option>
+                    <option value="8th">8th.</option>
+                    <option value="9th">9th.</option>
+                    <option value="10th">10th.</option>
+                    <option value="11th">11th.</option>
+                    <option value="12th">12th.</option>
+                    <option value="not applicable">Not Applicable</option>
                 </select>
             </div>
 

@@ -27,7 +27,8 @@ urlpatterns += patterns('sat.truenorth.views',
      url(r'^selectcenter/$', 'selectcenter'),    
      url(r'^menu/$', 'menu'),    
      url(r'^students/$', 'viewstudentlist'),    
-                   
+     url(r'^student/add/$', 'add_student'),                       
+     url(r'^student/edit/(?P<iden>\d+)/$', 'edit_student'),                       
 
 
        
