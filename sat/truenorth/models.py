@@ -5,10 +5,19 @@ from django.conf import settings
 
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    full_name = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=7,blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    mobile = models.CharField(max_length=10, blank=True)
+    landline = models.CharField(max_length=10, blank=True)
+    # full_name = models.CharField(max_length=255, blank=True)
 #    centres = models.ManyToManyField("Centre")
-    centre = models.ForeignKey("Centre") #TODO: FIXME
+    # centre  = models.CharField(max_length=255, blank=True)
+    centre = models.ForeignKey("Centre") # TODO: FIXME
     address = models.TextField(blank=True)
+    school = models.CharField(max_length=255, blank=True)
+    office_number = models.CharField(max_length=12, blank=True)
+    grade = models.CharField(max_length=15, blank=True)
     guardian = models.ForeignKey("Guardian", blank=True, null=True)    
     exams = models.ManyToManyField("Exam", through="StudentExam")
     courses = models.ManyToManyField("Course", through="StudentCourse")
@@ -27,7 +36,7 @@ class Student(models.Model):
 
 
     def __unicode__(self):
-        return self.full_name
+        return ( self.first_name + " " + self.last_name)
 
 
 
@@ -70,6 +79,9 @@ class Guardian(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)    
+    number = models.CharField(max_length=12, blank=True)   
+    email = models.CharField(max_length=255, blank=True)   
+    
 
     @property
     def get_type(self):

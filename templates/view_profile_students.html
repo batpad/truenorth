@@ -4,7 +4,7 @@
 {% if user.is_authenticated  %}
 
    {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
-        <h3 class="headingContent">View Profiles: Staff</h3>
+        <h3 class="headingContent">View Profiles: Student</h3>
 
 	
         
@@ -21,14 +21,14 @@
 	  {% for student in students  %}
             <li data-icon="false">
                 <div class="floatLeft">
-                    <h2>{{ student.full_name  }}</h2>
+                    <h2>{{ student.first_name  }} {{ student.last_name  }}</h2>
                     <p>{{student.get_email}}</p>
                     <p>Centre: {{student.centre}}</p>
                     <p>Address: {{student.address}}</p>
                     <p> Guardian: {{student.guardian}}</p>
                 </div>
                 <span class="buttonCustom">
-                    <a href="#profileStaff" class="buttonCustom floatRight" data-role="button">Edit</a>
+                    <a href="/student/edit/{{student.id}}" class="buttonCustom floatRight" data-role="button">Edit</a>
                 </span>
                 <div class="clear"></div>    
             </li>
