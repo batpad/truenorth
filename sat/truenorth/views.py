@@ -33,7 +33,7 @@ def edit_student(request,iden):
         if request.POST['guardian_email'] and request.POST['guardian_tel']:
             try:
                 # Already  a guardian
-                guardian = Guardian.objects.get(email=request.post['guardian_email'])
+                guardian = Guardian.objects.get(email=request.POST['guardian_email'])
             except:
                 # No Guardian
                 guardian_email = request.POST['guardian_email']
@@ -102,7 +102,7 @@ def add_student(request):
 
         
        #Create a guardian
-        if request.POST['guardian_email'] and request.POST['guardin_tel']:
+        if request.POST['guardian_email'] and request.POST['guardian_tel']:
             guardian_email = request.POST['guardian_email']
             guardian_tel = request.POST['guardian_tel']
             guardian_user = MyUser.objects.create_user(guardian_email,guardian_tel)
