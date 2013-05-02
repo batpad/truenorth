@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from ox.django.fields import DictField
 from django.conf import settings
 
+
+
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     title = models.CharField(max_length=7,blank=True)
@@ -53,8 +55,12 @@ class Tutor(models.Model):
         return self.full_name
 
 class Staff(models.Model):
+    
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    full_name = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=10, blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    # full_name = models.CharField(max_length=255, blank=True)
     pan_number = models.CharField(max_length=12, blank=True)
     cell_number = models.CharField(max_length=10, blank=True)
     landline = models.CharField(max_length=12, blank=True)
@@ -69,7 +75,7 @@ class Staff(models.Model):
 
     
     def __unicode__(self):
-        return self.full_name
+        return self.first_name + " " + self.last_name
 
 
 
@@ -88,7 +94,7 @@ class Guardian(models.Model):
         return self.user.user_type
 
     def __unicode__(self):
-        return self.full_name
+        return self.first_name + " " + self.last_name
 
 class Centre(models.Model):
     '''

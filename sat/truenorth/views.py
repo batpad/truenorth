@@ -90,7 +90,49 @@ def edit_student(request,iden):
     return render_to_response('edit_student.html',{'student':student,'centres':centres}, context_instance=RequestContext(request))
 
     # return HttpResponse(student)
+def edit_staff(request,iden):
+    staff = Staff.objects.get(id=iden)
+    if request.POST:
+        staff.title = request.POST['title']
+        staff.first_name = request.POST['first_name']
+        staff.last_name = request.POST['last_name']
+        staff.cell_number = request.POST['mobile']
+        staff.landline = request.POST['landline'] 
+        staff.pan_number = request.POST['pan_number']
+        staff.save()
+        return HttpResponseRedirect("/staff/")
 
+    return render_to_response('edit_staff.html',{'staff':staff}, context_instance=RequestContext(request))
+    
+    
+
+def add_staff(request):
+        if request.POST:
+
+        #Create a user for Staff
+            staff_email = request.POST['email']
+            staff_mobile = request.POST['mobile']
+            staff_user = MyUser.objects.create_user(staff_email,staff_mobile)
+            staff_user.save()
+        # Create a staff
+            info_dict={}
+            info_dict['user'] = staff_user
+            info_dict['title'] = request.POST['title']
+            info_dict['first_name'] = request.POST['first_name']
+            info_dict['last_name'] = request.POST['last_name']
+            info_dict['pan_number'] = request.POST['pan_number']
+            info_dict['cell_number'] = request.POST['mobile']
+            info_dict['landline'] = request.POST['landline']
+            staff = Staff.objects.create(**info_dict)
+            staff.save()
+            return HttpResponseRedirect('/staff/')
+
+        return render_to_response('add_staff.html', context_instance=RequestContext(request))
+
+
+
+
+    
 def add_student(request):
     if request.POST:
 
