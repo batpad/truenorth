@@ -44,15 +44,28 @@ class Student(models.Model):
 
 class Tutor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    full_name = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=10, blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    # full_name = models.CharField(max_length=255, blank=True)
+    pan_number = models.CharField(max_length=12, blank=True)
+    cell_number = models.CharField(max_length=10, blank=True)
+    landline = models.CharField(max_length=12, blank=True)
+    office_number = models.CharField(max_length=12, blank=True)
 
     @property
     def get_type(self):
         return self.user.user_type
+    @property
+    def get_email(self):
+        return self.user.email
+
 
 
     def __unicode__(self):
-        return self.full_name
+        return self.first_name + " " + self.last_name
+
+
 
 class Staff(models.Model):
     

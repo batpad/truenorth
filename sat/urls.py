@@ -27,10 +27,12 @@ urlpatterns += patterns('sat.truenorth.views',
      url(r'^selectcenter/$', 'selectcenter'),    
      url(r'^menu/$', 'menu'),    
      url(r'^students/$', 'viewstudentlist'),    
+     url(r'^tutors/$', 'viewtutorlist'), 
      url(r'^student/add/$', 'add_student'),                       
-     url(r'^staff/add/$', 'add_staff'),                       
+     url(r'^staff/add/$', 'add_staff'),
+     url(r'^tutor/add/$', 'add_tutor'),
      url(r'^student/edit/(?P<iden>\d+)/$', 'edit_student'),                       
-     url(r'^staff/edit/(?P<iden>\d+)/$', 'edit_staff'),                       
+     url(r'^tutor/edit/(?P<iden>\d+)/$', 'edit_tutor'),                       
 
 
        
