@@ -1,5 +1,5 @@
 # https://www.djangoproject.com/download/1.5c1/tarball/
-django
+Django
 ox
 django-admin-sortable
 django_extensions

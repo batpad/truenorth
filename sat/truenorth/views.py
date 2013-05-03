@@ -262,24 +262,82 @@ def selectcenter(request):
 
 
 def checkin(request):
-    user = request.GET.get("user", None)
-    time_in = request.GET.get("time_in", None)
-    time_out = request.GET.get("time_out", None)
-    centre = request.GET.get("centre", None)
-    if not user or not time_in or not centre:
-        return render_to_json_response({'error': 'Insufficient data'})
-    curr_user = request.user
-    curr_user_type = curr_user.user_type
-    if curr_user_type not in ['admin', 'staff', 'tutor']:
-        return render_to_json_response({'error': 'Insufficient permissions'})
-    if user.user_type == 'tutor' and curr_user_type == 'tutor':
-        return render_to_json_response({'error': 'Tutors can only mark attendance for students'})
-    today = datetime.datetime.now()
-    if Checkin.objects.filter(user=user).filter(time_in__date=today).filter(centre=centre).count() > 0:
-        return render_to_json_response({'error': 'Attendance already marked for today'})
-    checkin = Checkin(user=user, time_in=time_in, time_out=time_out, marked_by=curr_user)
-    checkin.save()
-    return render_to_json_response({'success': 'Attendance marked'})
+    if request.GET:
+        user = request.GET.get("user", None)
+        user = MyUser.objects.get(pk=user)
+        time_in = request.GET.get("time_in", None)
+        time_out = request.GET.get("time_out", None)
+        date = request.GET.get("date", '')
+        is_present = request.GET.get("is_present", True)
+        if is_present == 'false':
+            is_present = False
+        centre = request.GET.get("centre", None)
+        centre_obj = Centre.objects.get(id=centre)
+        if not user or not time_in or not centre:
+            return render_to_json_response({'error': 'Insufficient data'})
+        curr_user = request.user
+        if not curr_user.is_authenticated():
+            return render_to_json_response({'error': 'Please log-in'})
+        curr_user_type = curr_user.user_type
+        if curr_user_type not in ['admin', 'staff', 'tutor']:
+            return render_to_json_response({'error': 'Insufficient permissions'})
+        if user.user_type == 'tutor' and curr_user_type == 'tutor':
+            return render_to_json_response({'error': 'Tutors can only mark attendance for students'})
+        if date == '':
+            today = datetime.datetime.now()
+        else:
+            today = datetime.datetime.strptime(date, "%d %b, %Y")
+        hours,mins = (int(t) for t in time_in.split(":"))
+        time_obj = datetime.time(hours,mins)
+        time_in_obj = datetime.datetime.combine(today,time_obj)
+        today_min = datetime.datetime.combine(today, datetime.time.min)
+        today_max = datetime.datetime.combine(today, datetime.time.max)
+        today_qset = Checkin.objects.filter(user=user).filter(time_in__range=(today_min, today_max)).filter(centre=centre)
+        if today_qset.count() > 0:
+            if is_present:
+                today_qset[0].time_in = time_in_obj
+                today_qset[0].save()
+                return render_to_json_response({'success': 'Attendance updated'})
+            else:
+                today_qset.delete()
+                return render_to_json_response({'success': 'Attendance removed'})
+        if is_present:        
+            checkin = Checkin(user=user, time_in=time_in_obj, time_out=time_out, marked_by=curr_user,centre=centre_obj)
+            checkin.save()
+        else:
+            return render_to_json_response({'error': 'Present not marked'})
+        return render_to_json_response({'success': 'Attendance marked'})
+  
+    
 
+def has_attendance(request):
+    if not request.user.is_authenticated():
+        return render_to_json_response({'error': 'not logged in'})
+    user_id = request.GET.get('id', None)
+    date = request.GET.get('date', '')
+    if date == '':
+        date = datetime.datetime.today()
+    else:
+        date = datetime.datetime.strptime(date, "%d %b, %Y")
+    
+    today_min = datetime.datetime.combine(date, datetime.time.min)
+    today_max = datetime.datetime.combine(date, datetime.time.max)
+    user = MyUser.objects.get(id=user_id)
+    today_qset = Checkin.objects.filter(user=user).filter(time_in__range=(today_min, today_max))
+    if today_qset.count() > 0:
+        time_in = today_qset[0].time_in.strftime("%H:%m")
+        return render_to_json_response({'success': time_in})
+    else:
+        return render_to_json_response({'success': 'no'})
 
+def view_attendance(request):
+    date = request.GET.get('date', '')
+    if date == '':
+        today = datetime.datetime.today()
+    else:
+        today = datetime.datetime.strptime(date, "%d %b, %Y")
+    students = Student.objects.all()
+    students = [student.user.get_attendance_data(today) for student in Student.objects.all()]
+    return render_to_response('view_attendance.html',{'students':students, 'date': date}, context_instance=RequestContext(request))
 
+    
