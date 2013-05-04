@@ -3,7 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from sat.truenorth.models import *
-
+import datetime
 
 class MyUserManager(BaseUserManager):
     def create_user(self, email, user_type='', password=None):
@@ -46,7 +46,7 @@ class MyUser(AbstractBaseUser):
         ('1', 'TEACHER'),
         ('2', 'STUDENT'),
         ('3', 'GAURDIAN'),
-        ('4', 'STAFF')
+        ('4', 'STAFF'),
                ) 
 
 
@@ -85,6 +85,24 @@ class MyUser(AbstractBaseUser):
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
+
+    def get_attendance(self, date):
+        day_min = datetime.datetime.combine(date, datetime.time.min)
+        day_max = datetime.datetime.combine(date, datetime.time.max)
+        qset = Checkin.objects.filter(user=self).filter(time_in__range=(day_min, day_max))
+        if qset.count() > 0:
+            return qset[0]
+        else:
+            return False
+
+    def get_attendance_data(self, date=datetime.datetime.today()):
+        checkin = self.get_attendance(date)
+        d = {'checkin': checkin}
+        if self.user_type == 'student':
+            d['student'] = Student.objects.get(user=self)
+        if self.user_type == 'tutor':
+            d['tutor'] = Tutor.objects.get(user=self)
+        return d
 
     def __unicode__(self):
         return self.email

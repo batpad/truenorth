@@ -32,8 +32,10 @@ urlpatterns += patterns('sat.truenorth.views',
      url(r'^staff/add/$', 'add_staff'),
      url(r'^tutor/add/$', 'add_tutor'),
      url(r'^student/edit/(?P<iden>\d+)/$', 'edit_student'),                       
-     url(r'^tutor/edit/(?P<iden>\d+)/$', 'edit_tutor'),                       
-
+     url(r'^tutor/edit/(?P<iden>\d+)/$', 'edit_tutor'),                  
+     url(r'^checkin/$', 'checkin'),
+     url(r'^has_attendance/$', 'has_attendance'),
+     url(r'^view_attendance/$', 'view_attendance'),
 
        
 )

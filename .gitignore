@@ -1,9 +1,11 @@
 *.pyc
 *~
+*.sw*
 bin/
 include/
 lib/
 local/
+share/
 tmp/
 local_settings.py
 secret.txt
