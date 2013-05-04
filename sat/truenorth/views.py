@@ -24,6 +24,11 @@ def viewstudentlist(request):
 
     return render_to_response('view_profile_students.html',{'students':students}, context_instance=RequestContext(request))
 
+def viewtutorlist(request):
+    tutors = Tutor.objects.all()
+    return render_to_response('view_profile_tutor.html',{'tutors':tutors}, context_instance=RequestContext(request))
+
+
 
 def edit_student(request,iden):
     # Bloddy edit was such a *** ( oh forget it )
@@ -103,7 +108,46 @@ def edit_staff(request,iden):
         return HttpResponseRedirect("/staff/")
 
     return render_to_response('edit_staff.html',{'staff':staff}, context_instance=RequestContext(request))
+
+def edit_tutor(request,iden):
+    tutor = Tutor.objects.get(id=iden)
+    if request.POST:
+        tutor.title = request.POST['title']
+        tutor.first_name = request.POST['first_name']
+        tutor.last_name = request.POST['last_name']
+        tutor.cell_number = request.POST['mobile']
+        tutor.landline = request.POST['landline'] 
+        tutor.pan_number = request.POST['pan_number']
+        tutor.office_number = request.POST['office_num']
+        tutor.save()
+        return HttpResponseRedirect("/tutors/")
+
+    return render_to_response('edit_tutor.html',{'tutor':tutor}, context_instance=RequestContext(request))
+
     
+def add_tutor(request):
+        if request.POST:
+
+        #Create a user for tutor
+            tutor_email = request.POST['email']
+            tutor_mobile = request.POST['mobile']
+            tutor_user = MyUser.objects.create_user(tutor_email,tutor_mobile)
+            tutor_user.save()
+        # Create a tutor
+            info_dict={}
+            info_dict['user'] = tutor_user
+            info_dict['title'] = request.POST['title']
+            info_dict['first_name'] = request.POST['first_name']
+            info_dict['last_name'] = request.POST['last_name']
+            info_dict['pan_number'] = request.POST['pan_number']
+            info_dict['cell_number'] = request.POST['mobile']
+            info_dict['landline'] = request.POST['landline']
+            info_dict['office_number'] = request.POST['office_num']
+            tutor = Tutor.objects.create(**info_dict)
+            tutor.save()
+            return HttpResponseRedirect('/tutors/')
+
+        return render_to_response('add_tutor.html', context_instance=RequestContext(request))
     
 
 def add_staff(request):
