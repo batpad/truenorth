@@ -6,6 +6,8 @@ from ox.django.shortcuts import render_to_json_response
 from sat.login.models import *
 import datetime
 
+# Do we need to filter tutors and staff according to centre?
+
 def home(request, user_type):
     return HttpResponse("you are a %s" % user_type)
 
@@ -20,7 +22,11 @@ def viewstafflist(request):
     return render_to_response('view_profile_staff.html',{'staff':staff}, context_instance=RequestContext(request))
 
 def viewstudentlist(request):
-    students = Student.objects.all()
+    if request.session['centre'] == "All":
+        students = Student.objects.all()
+    else:
+        centre_obj = Centre.objects.get(name=request.session['centre'])
+        students  = Student.objects.filter(centre=centre_obj)
 
     return render_to_response('view_profile_students.html',{'students':students}, context_instance=RequestContext(request))
 
@@ -254,11 +260,15 @@ def menu(request):
 
 
 def selectcenter(request):
-    if request.GET:
-        center = request.GET.get('center')
-        request.session["center"] = center
+    if request.POST:
+        centre = request.POST['centre']
+        # I dont know why it does not update centre on assignment.It updates correctly if the key is made blank ...
+        request.session["centre"] = ""
+        request.session["centre"] = centre
+        # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
         return HttpResponseRedirect("/menu/")
-    return render_to_response('selectcenter.html', context_instance=RequestContext(request))
+    centres = Centre.objects.all()
+    return render_to_response('selectcenter.html',{'centres':centres},context_instance=RequestContext(request))
 
 
 def checkin(request):
