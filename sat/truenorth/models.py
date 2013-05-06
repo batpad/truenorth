@@ -107,7 +107,7 @@ class Guardian(models.Model):
         return self.user.user_type
 
     def __unicode__(self):
-        return self.first_name + " " + self.last_name
+        return self.full_name
 
 class Centre(models.Model):
     '''
