@@ -341,11 +341,11 @@ def selectcenter(request):
         # I dont know why it does not update centre on assignment.It updates correctly if the key is made blank ...
         request.session["centre"] = ""
         request.session["centre"] = centre
-        response = HttpResponse("blah")
-        # Wat da F** x-(
-        response.set_cookie( 'centre', centre)
-        # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
         return HttpResponseRedirect("/menu/")
+        # # Wat da F** x-(
+        # response.set_cookie( 'centre', centre)
+        # # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
+        # return response
     centres = Centre.objects.all()
     return render_to_response('selectcenter.html',{'centres':centres},context_instance=RequestContext(request))
 

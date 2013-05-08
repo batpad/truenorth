@@ -3,6 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from sat.truenorth.models import *
+from sat.login.first_last_days import get_month_day_range
 import datetime
 
 class MyUserManager(BaseUserManager):
@@ -74,6 +75,14 @@ class MyUser(AbstractBaseUser):
             return 'staff'
         else:
             return 'unknown'
+    def last_week_attendance_count():
+        start_date = datetime.datetime.now()
+        end_date = datetime.timedelta(days=7)
+        attendance = get_attendance_between_dates(start_date,end_date)
+        return attendance.count()
+    def get_all_attendance():
+        atten
+        
 
     def get_category(self):
         return self.user_type
@@ -85,6 +94,8 @@ class MyUser(AbstractBaseUser):
     def get_short_name(self):
         # The user is identified by their email address
         return self.email
+    def get_attendance_between_dates(self,start_date,end_date):
+        return Checkin.objects.filter(user = self,time_in__range = (start_date,end_date))
 
     def get_attendance(self, date):
         day_min = datetime.datetime.combine(date, datetime.time.min)
