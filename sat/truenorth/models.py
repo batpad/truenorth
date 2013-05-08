@@ -10,8 +10,9 @@ class Student(models.Model):
     title = models.CharField(max_length=7,blank=True)
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
-    mobile = models.CharField(max_length=10, blank=True)
-    landline = models.CharField(max_length=10, blank=True)
+    mobile = models.CharField(max_length=255, blank=True)
+    landline = models.CharField(max_length=255, blank=True)
+    is_active = models.BooleanField(default=True)
     # full_name = models.CharField(max_length=255, blank=True)
 #    centres = models.ManyToManyField("Centre")
     # centre  = models.CharField(max_length=255, blank=True)
@@ -20,7 +21,8 @@ class Student(models.Model):
     school = models.CharField(max_length=255, blank=True)
     office_number = models.CharField(max_length=12, blank=True)
     grade = models.CharField(max_length=15, blank=True)
-    guardian = models.ForeignKey("Guardian", blank=True, null=True)    
+    guardian_1 = models.ForeignKey("Guardian", blank=True, null=True, related_name="guardian_1")    
+    guardian_2 = models.ForeignKey("Guardian", blank=True, null=True, related_name="guardian_2")    
     exams = models.ManyToManyField("Exam", through="StudentExam")
     courses = models.ManyToManyField("Course", through="StudentCourse")
     worksheets = models.ManyToManyField("Worksheet", through="StudentWorksheet")
@@ -48,8 +50,9 @@ class Tutor(models.Model):
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
     # full_name = models.CharField(max_length=255, blank=True)
-    pan_number = models.CharField(max_length=12, blank=True)
-    cell_number = models.CharField(max_length=10, blank=True)
+    pan_number = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    cell_number = models.CharField(max_length=255, blank=True)
     landline = models.CharField(max_length=12, blank=True)
     office_number = models.CharField(max_length=12, blank=True)
 
@@ -74,9 +77,9 @@ class Staff(models.Model):
     first_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255, blank=True)
     # full_name = models.CharField(max_length=255, blank=True)
-    pan_number = models.CharField(max_length=12, blank=True)
-    cell_number = models.CharField(max_length=10, blank=True)
-    landline = models.CharField(max_length=12, blank=True)
+    pan_number = models.CharField(max_length=255, blank=True)
+    cell_number = models.CharField(max_length=255, blank=True)
+    landline = models.CharField(max_length=255, blank=True)
     
     @property
     def get_email(self):
@@ -98,7 +101,7 @@ class Guardian(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)    
-    number = models.CharField(max_length=12, blank=True)   
+    number = models.CharField(max_length=255, blank=True)   
     email = models.CharField(max_length=255, blank=True)   
     
 
