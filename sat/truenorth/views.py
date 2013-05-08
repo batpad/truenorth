@@ -41,33 +41,66 @@ def edit_student(request,iden):
     student = Student.objects.get(id=iden)
     if request.POST:
        #Create a guardian
-        if request.POST['guardian_email'] and request.POST['guardian_tel']:
+        if request.POST['guardian1_email'] and request.POST['guardian1_tel']:
             try:
                 # Already  a guardian
-                guardian = Guardian.objects.get(email=request.POST['guardian_email'])
+                guardian1 = Guardian.objects.get(email=request.POST['guardian1_email'])
             except:
                 # No Guardian
-                guardian_email = request.POST['guardian_email']
-                guardian_tel = request.POST['guardian_tel']
-                guardian_user = MyUser.objects.create_user(guardian_email,guardian_tel)
-                guardian_user.save()
-                guardian =Guardian()
-                guardian.user = guardian_user
+                guardian1_email = request.POST['guardian1_email']
+                guardian1_tel = request.POST['guardian1_tel']
+                guardian1_user = MyUser.objects.create_user(guardian1_email,guardian1_tel)
+                guardian1_user.save()
+                guardian1 =Guardian()
+                guardian1.user = guardian_user
 
             
-            if request.POST['guardian_full_name']:
-                guardian.full_name = request.POST['guardian_full_name']
+            if request.POST['guardian1_full_name']:
+                guardian1.full_name = request.POST['guardian1_full_name']
             else:
-                guardian.full_name = ""
-            guardian.number = request.POST["guardian_tel"]
-            guardian.email = request.POST["guardian_email"]
+                guardian1.full_name = ""
+            guardian1.number = request.POST["guardian1_tel"]
+            guardian1.email = request.POST["guardian1_email"]
             
         
-            guardian.save()
+            guardian1.save()
         else:
             # No input from user
-            guardian = None
+            guardian1 = None
+
+
+        if request.POST['guardian2_email'] and request.POST['guardian2_tel']:
+            try:
+                # Already  a guardian
+                guardian2 = Guardian.objects.get(email=request.POST['guardian2_email'])
+            except:
+                # No Guardian
+                guardian2_email = request.POST['guardian2_email']
+                guardian2_tel = request.POST['guardian2_tel']
+                guardian2_user = MyUser.objects.create_user(guardian2_email,guardian2_tel)
+                guardian2_user.save()
+                guardian2 =Guardian()
+                guardian2.user = guardian2_user
+
+            
+            if request.POST['guardian2_full_name']:
+                guardian2.full_name = request.POST['guardian2_full_name']
+            else:
+                guardian.full_name = ""
+            guardian2.number = request.POST["guardian2_tel"]
+            guardian2.email = request.POST["guardian2_email"]
+            
         
+            guardian2.save()
+        else:
+            # No input from user
+            guardian2 = None
+
+        if request.POST['is_active'] == 'inactive':
+            student.is_active = False
+        else:
+            student.is_active = True
+
         
             
         student.title = request.POST['title']
@@ -81,7 +114,8 @@ def edit_student(request,iden):
         student.school = request.POST['school']
         student.address = request.POST['address']
         student.office_number = request.POST['office_number']
-        student.guardian = guardian
+        student.guardian_1 = guardian1
+        student.guardian_2 = guardian2
         # Get the centre
         centre = Centre.objects.get(id=request.POST['centre'])
         student.centre = centre
@@ -121,6 +155,7 @@ def edit_tutor(request,iden):
         tutor.title = request.POST['title']
         tutor.first_name = request.POST['first_name']
         tutor.last_name = request.POST['last_name']
+        tutor.address = request.POST['address']
         tutor.cell_number = request.POST['mobile']
         tutor.landline = request.POST['landline'] 
         tutor.pan_number = request.POST['pan_number']
@@ -148,6 +183,7 @@ def add_tutor(request):
             info_dict['pan_number'] = request.POST['pan_number']
             info_dict['cell_number'] = request.POST['mobile']
             info_dict['landline'] = request.POST['landline']
+            info_dict['address'] = request.POST['address']
             info_dict['office_number'] = request.POST['office_num']
             tutor = Tutor.objects.create(**info_dict)
             tutor.save()
@@ -185,43 +221,67 @@ def add_staff(request):
     
 def add_student(request):
     if request.POST:
-
-        #Create a user for Student 
+       #Create a user for Student 
         student_email = request.POST['email']
         student_mobile = request.POST['mobile']
         student_user = MyUser.objects.create_user(student_email,student_mobile)
         student_user.save()
 
         
-       #Create a guardian
-        if request.POST['guardian_email'] and request.POST['guardian_tel']:
-            guardian_email = request.POST['guardian_email']
-            guardian_tel = request.POST['guardian_tel']
-            guardian_user = MyUser.objects.create_user(guardian_email,guardian_tel)
-            guardian_user.save()
+       #Create guardian 1
+        if request.POST['guardian1_email'] and request.POST['guardian1_tel']:
+            guardian1_email = request.POST['guardian1_email']
+            guardian1_tel = request.POST['guardian1_tel']
+            guardian1_user = MyUser.objects.create_user(guardian1_email,guardian1_tel)
+            guardian1_user.save()
 
 
-            guardian =Guardian()
+            guardian1 =Guardian()
 
             
-            if request.POST['guardian_full_name']:
-                guardian.full_name = request.POST['guardian_full_name']
+            if request.POST['guardian1_full_name']:
+                guardian1.full_name = request.POST['guardian1_full_name']
             else:
-                guardian.full_name = ""
-            guardian.number = request.POST["guardian_tel"]
-            guardian.email = request.POST["guardian_email"]
-            guardian.user = guardian_user
+                guardian1.full_name = ""
+            guardian1.number = request.POST["guardian1_tel"]
+            guardian1.email = request.POST["guardian1_email"]
+            guardian1.user = guardian1_user
         
-            guardian.save()
+            guardian1.save()
         else:
-            guardian = None
+            guardian1 = None
+
+        if request.POST['guardian2_email'] and request.POST['guardian2_tel']:
+            guardian2_email = request.POST['guardian2_email']
+            guardian2_tel = request.POST['guardian2_tel']
+            guardian2_user = MyUser.objects.create_user(guardian2_email,guardian2_tel)
+            guardian2_user.save()
+
+
+            guardian2 =Guardian()
+
+            
+            if request.POST['guardian2_full_name']:
+                guardian2.full_name = request.POST['guardian2_full_name']
+            else:
+                guardian2.full_name = ""
+            guardian2.number = request.POST["guardian2_tel"]
+            guardian2.email = request.POST["guardian2_email"]
+            guardian2.user = guardian2_user
+        
+            guardian2.save()
+        else:
+            guardian2 = None
+
             
         
             
         #Create a student
         info_dict={}
-        
-
+        if request.POST['is_active'] == 'active':
+            info_dict['is_active'] = True
+        else:
+            info_dict['is_active'] = False
         info_dict['user'] = student_user
         info_dict['title'] = request.POST['title']
         info_dict['first_name'] = request.POST['first_name']
@@ -235,7 +295,8 @@ def add_student(request):
         info_dict['school'] = request.POST['school']
         info_dict['address'] = request.POST['address']
         info_dict['office_number'] = request.POST['office_number']
-        info_dict['guardian'] = guardian
+        info_dict['guardian_1'] = guardian1
+        info_dict['guardian_2'] = guardian2
 
         # Get the centre
         centre = Centre.objects.get(id=request.POST['centre'])

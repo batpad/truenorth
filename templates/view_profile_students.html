@@ -24,8 +24,10 @@
                     <h2>{{ student.first_name  }} {{ student.last_name  }}</h2>
                     <p>{{student.get_email}}</p>
                     <p>Centre: {{student.centre}}</p>
+		    <p> Status: {% ifequal student.is_active True %}Active{% else %}Inactive{% endifequal %}</p>
                     <p>Address: {{student.address}}</p>
                     <p> Guardian: {{student.guardian}}</p>
+
                 </div>
                 <span class="buttonCustom">
                     <a href="/student/edit/{{student.id}}" class="buttonCustom floatRight" data-role="button">Edit</a>

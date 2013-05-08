@@ -46,8 +46,19 @@
             
             <div data-role="fieldcontain">
                 <label for="">Email</label>
-                <input type="email" name="email" id="" placeholder="" value="{{ student.get_email }}" disabled>
+                <input type="email" name="email" id="" placeholder="" value="{{ student.get_email }}" readonly>
             </div>
+
+            <div data-role="fieldcontain">
+
+                <label for="">Status</label>
+                <select name="is_active" id="">
+                    <option value="active">Active</option>
+                    <option value="inactive" {% ifequal student.is_active False %} selected {% endifequal %}>Inactive</option>
+                </select>
+            </div>
+
+
  
             <div data-role="fieldcontain">
                 <label for="">Mobile No.</label>
@@ -88,17 +99,30 @@
 	    
 
             <div data-role="fieldcontain">
-                <label for="">Guardian Full Name </label>
-                <input type="text" name="guardian_full_name" id="" placeholder="" value="{{student.guardian.full_name}}">
+                <label for="">First guardian Full Name</label>
+                <input type="text" name="guardian1_full_name" id="" placeholder="" value="{{student.guardian_1.full_name}}">
             </div>
 
             <div data-role="fieldcontain">
-                <label for="">Guardian Email</label>
-                <input type="email" name="guardian_email" id="" placeholder="" value="{{student.guardian.email}}">
+                <label for="">First guardian Email</label>
+                <input type="email" name="guardian1_email" id="" placeholder="" value="{{student.guardian_1.email}}"  readonly>
             </div>
             <div data-role="fieldcontain">
-                <label for="">Gaurdian Telephone</label>
-                <input type="tel" name="guardian_tel" id="" placeholder="" value="{{student.guardian.number}}">
+                <label for="">First guardian Telephone</label>
+                <input type="tel" name="guardian1_tel" id="" placeholder="" value="{{student.guardian_1.number}}">
+            </div>
+            <div data-role="fieldcontain">
+                <label for="">Second guardian Full Name</label>
+                <input type="text" name="guardian2_full_name" id="" placeholder="" value="{{student.guardian_2.full_name}}">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Second guardian Email</label>
+                <input type="email" name="guardian2_email" id="" placeholder="" value="{{student.guardian_2.email}}"  readonly>
+            </div>
+            <div data-role="fieldcontain">
+                <label for="">Second guardian Telephone</label>
+                <input type="tel" name="guardian2_tel" id="" placeholder="" value="{{student.guardian_2.number}}">
             </div>
 
 
