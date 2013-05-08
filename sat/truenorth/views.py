@@ -49,7 +49,8 @@ def edit_student(request,iden):
                 # No Guardian
                 guardian1_email = request.POST['guardian1_email']
                 guardian1_tel = request.POST['guardian1_tel']
-                guardian1_user = MyUser.objects.create_user(guardian1_email,guardian1_tel)
+                guardian1_user = MyUser.objects.create_user(guardian1_email)
+                guardian1_user.set_password(guardian1_tel)
                 guardian1_user.save()
                 guardian1 =Guardian()
                 guardian1.user = guardian_user
@@ -77,7 +78,8 @@ def edit_student(request,iden):
                 # No Guardian
                 guardian2_email = request.POST['guardian2_email']
                 guardian2_tel = request.POST['guardian2_tel']
-                guardian2_user = MyUser.objects.create_user(guardian2_email,guardian2_tel)
+                guardian2_user = MyUser.objects.create_user(guardian2_email)
+                guardian2_user.set_password(guardian2_tel)
                 guardian2_user.save()
                 guardian2 =Guardian()
                 guardian2.user = guardian2_user
@@ -172,7 +174,8 @@ def add_tutor(request):
         #Create a user for tutor
             tutor_email = request.POST['email']
             tutor_mobile = request.POST['mobile']
-            tutor_user = MyUser.objects.create_user(tutor_email,tutor_mobile)
+            tutor_user = MyUser.objects.create_user(tutor_email)
+            tutor_user.set_password(tutor_mobile) 
             tutor_user.save()
         # Create a tutor
             info_dict={}
@@ -198,7 +201,8 @@ def add_staff(request):
         #Create a user for Staff
             staff_email = request.POST['email']
             staff_mobile = request.POST['mobile']
-            staff_user = MyUser.objects.create_user(staff_email,staff_mobile)
+            staff_user = MyUser.objects.create_user(staff_email)
+            staff_user.set_password(staff_mobile)
             staff_user.save()
         # Create a staff
             info_dict={}
@@ -224,7 +228,8 @@ def add_student(request):
        #Create a user for Student 
         student_email = request.POST['email']
         student_mobile = request.POST['mobile']
-        student_user = MyUser.objects.create_user(student_email,student_mobile)
+        student_user = MyUser.objects.create_user(student_email)
+        student_user.set_password(student_mobile)
         student_user.save()
 
         
@@ -232,7 +237,8 @@ def add_student(request):
         if request.POST['guardian1_email'] and request.POST['guardian1_tel']:
             guardian1_email = request.POST['guardian1_email']
             guardian1_tel = request.POST['guardian1_tel']
-            guardian1_user = MyUser.objects.create_user(guardian1_email,guardian1_tel)
+            guardian1_user = MyUser.objects.create_user(guardian1_email)
+            guardian1_user.set_password(guardian1_tel)
             guardian1_user.save()
 
 
@@ -254,7 +260,8 @@ def add_student(request):
         if request.POST['guardian2_email'] and request.POST['guardian2_tel']:
             guardian2_email = request.POST['guardian2_email']
             guardian2_tel = request.POST['guardian2_tel']
-            guardian2_user = MyUser.objects.create_user(guardian2_email,guardian2_tel)
+            guardian2_user = MyUser.objects.create_user(guardian2_email)
+            guardian2_user.set_password(guardian2_tel)
             guardian2_user.save()
 
 
@@ -317,6 +324,14 @@ def add_student(request):
 
 def menu(request):
     return render_to_response('menu.html', context_instance=RequestContext(request))
+
+def redirectcentre(request):
+    if request.COOKIES.has_key('centre'):
+        request.session["centre"] = request.COOKIES['centre']
+        return HttpResponseRedirect("/menu/")
+    else:
+        return HttpResponseRedirect("/selectcenter/")
+        
     
 
 
@@ -326,6 +341,9 @@ def selectcenter(request):
         # I dont know why it does not update centre on assignment.It updates correctly if the key is made blank ...
         request.session["centre"] = ""
         request.session["centre"] = centre
+        response = HttpResponse("blah")
+        # Wat da F** x-(
+        response.set_cookie( 'centre', centre)
         # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
         return HttpResponseRedirect("/menu/")
     centres = Centre.objects.all()

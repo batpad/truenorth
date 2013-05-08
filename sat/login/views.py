@@ -33,7 +33,7 @@ def login_user(request):
                # # For checking type of user 
                 User_Instance=MyUser.objects.get(email=username).get_category()
                 if (User_Instance == "superuser" or User_Instance == "admin"):
-                    return HttpResponseRedirect("/selectcenter/")
+                    return HttpResponseRedirect("/redirectcentre/")
                    # return HttpResponse("Teacher")
                # else:
                #     if User_Instance == "STUDENT":
