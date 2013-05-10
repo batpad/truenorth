@@ -3,7 +3,7 @@ from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
 from sat.truenorth.models import *
-from sat.login.first_last_days import get_month_day_range
+from sat.login.date_functions import *
 import datetime
 
 class MyUserManager(BaseUserManager):
@@ -48,16 +48,29 @@ class MyUser(AbstractBaseUser):
         ('2', 'STUDENT'),
         ('3', 'GAURDIAN'),
         ('4', 'STAFF'),
-               ) 
+        ) 
+
+
 
 
 #    user_type = models.CharField(max_length=10, choices=usertype)
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+    changed = models.DateTimeField(null=True, editable=False)
+    created = models.DateTimeField(null=True, editable=False)
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = datetime.datetime.today()
+        self.changed = datetime.datetime.today()
+        if self.created == None:
+            self.created = self.changed
+        super(MyUser, self).save(*args, **kwargs)
+
 
     objects = MyUserManager()
 
     USERNAME_FIELD = 'email'
+
 
     @property
     def user_type(self):
@@ -78,10 +91,89 @@ class MyUser(AbstractBaseUser):
     def last_week_attendance_count():
         start_date = datetime.datetime.now()
         end_date = datetime.timedelta(days=7)
-        attendance = get_attendance_between_dates(start_date,end_date)
+        attendance = self.get_attendance_between_dates(start_date,end_date)
         return attendance.count()
-    def get_all_attendance():
-        atten
+    def get_attendance_for_month(self,month,year):
+        '''
+        get attendance for a specfic month of a year.Eg: for May of 2013, pass parameters 5, 2013
+        '''
+        day_int = 1
+        month_int = int(month)
+        year_int = int(year)
+        date_input = datetime.datetime(year_int,month_int,day_int)
+        range_dates = get_month_day_range(date_input)
+        attendance = self.get_attendance_between_dates(range_dates[1],range_dates[0])
+        count_attendance = attendance.count()
+        count_days = get_days_between_dates(range_dates[0], range_dates[1])
+        ret_dict =  {
+            'attendance':count_attendance,
+            'total_days':count_days
+            }
+        return ret_dict
+    
+    @property
+    def get_attendance_for_this_week(self):
+        '''
+        gets attendance for this week.Previous 7 days to be precise
+        '''
+        date_now = datetime.datetime.now()
+        date_7_days_back = (datetime.datetime.now() - datetime.timedelta(days=7))
+
+        attendance = self.get_attendance_between_dates(date_now,date_7_days_back)
+
+        count_attendance = attendance.count()
+        count_days = get_days_between_dates(date_7_days_back,date_now)
+        ret_dict =  {
+            'attendance':count_attendance,
+            'total_days':count_days
+            }
+        return ret_dict
+
+    def get_attendance_for_this_week(self):
+        '''
+        gets attendance for this week.Previous 7 days to be precise
+        '''
+        date_now = datetime.datetime.now()
+        date_7_days_back = (datetime.datetime.now() - datetime.timedelta(days=7))
+
+        attendance = self.get_attendance_between_dates(date_now,date_7_days_back)
+
+        count_attendance = attendance.count()
+        count_days = get_days_between_dates(date_7_days_back,date_now)
+        ret_dict =  {
+            'attendance':count_attendance,
+            'total_days':count_days
+            }
+        return ret_dict
+
+
+
+# Only "All days" remain
+    def get_attendance_from_admission(self):
+        '''
+        gets attendance since admission in days
+        '''
+        date_now = datetime.datetime.now()
+        date_of_admission = self.created
+
+        attendance = self.get_attendance_between_dates(date_now,date_of_admission)
+
+        count_attendance = attendance.count()
+        count_days = get_days_between_dates(date_7_days_back,date_now)
+        ret_dict =  {
+            'attendance':count_attendance,
+            'total_days':count_days
+            }
+        return ret_dict
+
+
+
+
+
+
+        
+        
+        
         
 
     def get_category(self):
@@ -95,7 +187,7 @@ class MyUser(AbstractBaseUser):
         # The user is identified by their email address
         return self.email
     def get_attendance_between_dates(self,start_date,end_date):
-        return Checkin.objects.filter(user = self,time_in__range = (start_date,end_date))
+        return Checkin.objects.filter(user=self,time_in__range=(end_date,start_date))
 
     def get_attendance(self, date):
         day_min = datetime.datetime.combine(date, datetime.time.min)
