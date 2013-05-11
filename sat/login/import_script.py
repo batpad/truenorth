@@ -4,8 +4,8 @@ import csv
 
 # WARNING: THIS SCRIPT MUST BE RUN AFTER ADDING ATLEAST ONE CENTRE !
 
-def import_things():
-    with open('/home/anshu/dev/truenorth/sat/login/list_final.csv','rb') as import_list:
+def import_things(csv_path):
+    with open(csv_path,'rb') as import_list:
         somereader = csv.reader(import_list,delimiter=',')
 
         for row in somereader:
@@ -13,6 +13,7 @@ def import_things():
             
             student_email = row[0]
             student_mobile = row[14]
+            #FIXME: if student with email exists, print duplicate student name and move on, or something?
             student_user = MyUser.objects.create_user(student_email)
             student_user.set_password(student_mobile)
             student_user.save()
@@ -21,6 +22,7 @@ def import_things():
 
             guardian1_email = row[16]
             guardian1_tel = row[17]
+            #FIXME: so this is a tricky one .. if guardian1 with email exists, just set student.guardian_1 to be that guardian object. eg. if a parent has two children taking classes.
             guardian1_user = MyUser.objects.create_user(guardian1_email)
             guardian1_user.set_password(guardian1_tel)
             guardian1_user.save()
@@ -35,7 +37,7 @@ def import_things():
         # Now the student
             info_dict = {}
             info_dict['user'] = student_user
-            info_dict['title'] = row[18]
+            info_dict['title'] = row[19]
             info_dict['first_name'] = row[10]
             info_dict['last_name'] = row[13]
             info_dict['mobile'] = row[14]
@@ -48,8 +50,9 @@ def import_things():
             info_dict['guardian_1'] = guardian1
             info_dict['guardian_2'] = guardian2
         # Get the centre
-            centre = Centre.objects.all()[0] # Fixme: Set to take colaba
+            centre = Centre.objects.all()[0] # Fixme: Set to take colaba #FIXME: ideally, centre should be passed as a param for the function, so that when calling the script, one can import a csv for colaba, or for vile parle, etc (OR, hard-coding to colaba is also fine for now.)
             info_dict['centre'] = centre
+            print info_dict
             student = Student.objects.create(**info_dict)
             student.save()
         
