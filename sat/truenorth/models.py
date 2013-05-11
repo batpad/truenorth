@@ -302,6 +302,12 @@ class Checkin(models.Model):
         dtstring = self.time_in.strftime("%d %b, %Y at %H:%M")
         return unicode(self.user) + " on " + dtstring
 
+    def get_dict(self):
+        return {
+            'id': self.id,
+            'time_in': self.time_in.strftime("%H:%m"),
+            'time_out': self.time_out.strftime("%H:%m") if self.time_out else ''
+        }
 
 class Interaction(models.Model):
     '''

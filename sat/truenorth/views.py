@@ -2,6 +2,7 @@ from models import *
 from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.utils import timezone
 from ox.django.shortcuts import render_to_json_response
 from sat.login.models import *
 import datetime
@@ -355,8 +356,10 @@ def checkin(request):
         user = request.GET.get("user", None)
         user = MyUser.objects.get(pk=user)
         time_in = request.GET.get("time_in", None)
-        time_out = request.GET.get("time_out", None)
-        date = request.GET.get("date", '')
+        time_out = request.GET.get("time_out", '')
+        if time_out == '':
+            time_out = None
+        date = request.GET.get("date", timezone.now().strftime("%d %b, %Y"))
         is_present = request.GET.get("is_present", True)
         if is_present == 'false':
             is_present = False
@@ -373,12 +376,16 @@ def checkin(request):
         if user.user_type == 'tutor' and curr_user_type == 'tutor':
             return render_to_json_response({'error': 'Tutors can only mark attendance for students'})
         if date == '':
-            today = datetime.datetime.now()
+            today = timezone.now()
         else:
             today = datetime.datetime.strptime(date, "%d %b, %Y")
-        hours,mins = (int(t) for t in time_in.split(":"))
-        time_obj = datetime.time(hours,mins)
-        time_in_obj = datetime.datetime.combine(today,time_obj)
+        time_in_hours,time_in_mins = (int(t) for t in time_in.split(":"))
+        time_in_obj = datetime.time(time_in_hours,time_in_mins)
+        time_in = datetime.datetime.combine(today,time_in_obj)
+        if time_out:
+            time_out_hours,time_out_mins = (int(t) for t in time_out.split(":"))
+            time_out_obj = datetime.time(time_out_hours,time_out_mins)
+            time_out = datetime.datetime.combine(today,time_out_obj)
         today_min = datetime.datetime.combine(today, datetime.time.min)
         today_max = datetime.datetime.combine(today, datetime.time.max)
         today_qset = Checkin.objects.filter(user=user).filter(time_in__range=(today_min, today_max)).filter(centre=centre)
@@ -391,7 +398,7 @@ def checkin(request):
                 today_qset.delete()
                 return render_to_json_response({'success': 'Attendance removed'})
         if is_present:        
-            checkin = Checkin(user=user, time_in=time_in_obj, time_out=time_out, marked_by=curr_user,centre=centre_obj)
+            checkin = Checkin(user=user, time_in=time_in, time_out=time_out, marked_by=curr_user,centre=centre_obj)
             checkin.save()
         else:
             return render_to_json_response({'error': 'Present not marked'})
@@ -405,7 +412,7 @@ def has_attendance(request):
     user_id = request.GET.get('id', None)
     date = request.GET.get('date', '')
     if date == '':
-        date = datetime.datetime.today()
+        date = timezone.now()
     else:
         date = datetime.datetime.strptime(date, "%d %b, %Y")
     
@@ -413,16 +420,18 @@ def has_attendance(request):
     today_max = datetime.datetime.combine(date, datetime.time.max)
     user = MyUser.objects.get(id=user_id)
     today_qset = Checkin.objects.filter(user=user).filter(time_in__range=(today_min, today_max))
+    now = timezone.now().strftime("%H:%m")
     if today_qset.count() > 0:
-        time_in = today_qset[0].time_in.strftime("%H:%m")
-        return render_to_json_response({'success': time_in})
+        checkin_dict = today_qset[0].get_dict()
+        #time_in = today_qset[0].time_in.strftime("%H:%m")
+        return render_to_json_response({'success': 'yes', 'checkin': checkin_dict, 'now': now})
     else:
-        return render_to_json_response({'success': 'no'})
+        return render_to_json_response({'success': 'no', 'now': now})
 
 def view_attendance(request):
     date = request.GET.get('date', '')
     if date == '':
-        today = datetime.datetime.today()
+        today = timezone.now()
     else:
         today = datetime.datetime.strptime(date, "%d %b, %Y")
     students = Student.objects.all()

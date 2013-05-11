@@ -78,46 +78,53 @@
 	    var id = $that.closest('li').attr('data-id');
 	    var date = $('#attendanceDate').val();
 	    $.getJSON("/has_attendance/", {id:id, date:date}, function(response) {
-		if (response.error) {
-		    alert(response.error);
-		    return;
-		}
-		
-		if (response.success !== 'no') {
-		    $('#attendanceform').find('.startTime').val(response.success);
-		    $('#attendanceform').find('.presentCheckbox').attr("checked", "checked").checkboxradio('refresh');
-		} else {
-		    $('#attendanceform').find('.presentCheckbox').removeAttr("checked").checkboxradio('refresh');
-		}
-	    $('#studentAttPopup').popup('open');
-	    $('#attendanceform').bind('submit', function(e) {
-		e.preventDefault();
-		var time = $(this).find('.startTime').val();
-		var isPresent = $(this).find('.presentCheckbox').is(":checked");
-		
-		console.log(time);
-		$.getJSON("/checkin/", {
-		    user: id,
-		    time_in: time,
-		    is_present: isPresent,
-		    date: date,
-		    centre: 1 //FIXME: get centre from page
-		}, function(response) {
-		    if (response.error) {
-			alert(response.error);
-		    } else {
-			$('#attendanceform').unbind("submit");
-			$('#studentAttPopup').popup('close');
-			var $tickmark = $that.closest('li').find('.presentIcon');
-			if (isPresent) {
-			    $tickmark.removeClass('none').addClass('presentIconGreen');
-			    }    else {
-				$tickmark.removeClass('presentIconGreen').addClass('none');
-			    }
-		         }
+            if (response.error) {
+                alert(response.error);
+                return;
+            }
+            
+            if (response.success !== 'no') {
+                var startTime = response.checkin.time_in,
+                    endTime = response.checkin.time_out == '' ? response.now : response.checkin.time_out;
+                $('#attendanceform').find('.presentCheckbox').attr("checked", "checked").checkboxradio('refresh');
+            } else {
+                var startTime = response.now;
+                var endTime = '';
+                $('#attendanceform').find('.presentCheckbox').removeAttr("checked").checkboxradio('refresh');
+            }
+            $('#attendanceform').find('.startTime').val(startTime);
+            $('#attendanceform').find('.endTime').val(endTime);
 
-		
-		});
+            $('#studentAttPopup').popup('open');
+            $('#attendanceform').bind('submit', function(e) {
+            e.preventDefault();
+            var time_in = $(this).find('.startTime').val();
+            var time_out = $(this).find('.endTime').val();
+            var isPresent = $(this).find('.presentCheckbox').is(":checked");
+            
+            $.getJSON("/checkin/", {
+                user: id,
+                time_in: time_in,
+                time_out: time_out,
+                is_present: isPresent,
+                date: date,
+                centre: 1 //FIXME: get centre from page
+            }, function(response) {
+                if (response.error) {
+                alert(response.error);
+                } else {
+                $('#attendanceform').unbind("submit");
+                $('#studentAttPopup').popup('close');
+                var $tickmark = $that.closest('li').find('.presentIcon');
+                if (isPresent) {
+                    $tickmark.removeClass('none').addClass('presentIconGreen');
+                    }    else {
+                    $tickmark.removeClass('presentIconGreen').addClass('none');
+                    }
+                     }
+
+            
+            });
 	    });
 	    return false;
 	});
