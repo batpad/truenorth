@@ -72,6 +72,68 @@
     $content.css("overflow", "visible");
     });*/
 
-    $( '.datepicker' ).pickadate();
-    
+	$('.markAttendanceBtn').click(function(e) {
+	    e.preventDefault();
+	    var $that = $(this);
+	    var id = $that.closest('li').attr('data-id');
+	    var date = $('#attendanceDate').val();
+	    $.getJSON("/has_attendance/", {id:id, date:date}, function(response) {
+		if (response.error) {
+		    alert(response.error);
+		    return;
+		}
+		
+		if (response.success !== 'no') {
+		    $('#attendanceform').find('.startTime').val(response.success);
+		    $('#attendanceform').find('.presentCheckbox').attr("checked", "checked").checkboxradio('refresh');
+		} else {
+		    $('#attendanceform').find('.presentCheckbox').removeAttr("checked").checkboxradio('refresh');
+		}
+	    $('#studentAttPopup').popup('open');
+	    $('#attendanceform').bind('submit', function(e) {
+		e.preventDefault();
+		var time = $(this).find('.startTime').val();
+		var isPresent = $(this).find('.presentCheckbox').is(":checked");
+		
+		console.log(time);
+		$.getJSON("/checkin/", {
+		    user: id,
+		    time_in: time,
+		    is_present: isPresent,
+		    date: date,
+		    centre: 1 //FIXME: get centre from page
+		}, function(response) {
+		    if (response.error) {
+			alert(response.error);
+		    } else {
+			$('#attendanceform').unbind("submit");
+			$('#studentAttPopup').popup('close');
+			var $tickmark = $that.closest('li').find('.presentIcon');
+			if (isPresent) {
+			    $tickmark.removeClass('none').addClass('presentIconGreen');
+			    }    else {
+				$tickmark.removeClass('presentIconGreen').addClass('none');
+			    }
+		         }
+
+		
+		});
+	    });
+	    return false;
+	});
+	});
+	$( '.datepicker' ).pickadate().on("change", function() {
+	    var date = $(this).val();
+	    var url = "/view_attendance/";
+	    if (date) {
+		url += "?date=" + date;
+	    }
+	    location.href = url;
+	});
+/*
+    $('#attendanceform').submit(function (event) {
+     event.preventDefault();
+     alert("You submitted, you fool !");
+ });
+*/    
 });

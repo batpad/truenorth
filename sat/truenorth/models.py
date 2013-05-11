@@ -3,13 +3,26 @@ from django.contrib.auth.models import User
 from ox.django.fields import DictField
 from django.conf import settings
 
+
+
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    full_name = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=7,blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    mobile = models.CharField(max_length=255, blank=True)
+    landline = models.CharField(max_length=255, blank=True)
+    is_active = models.BooleanField(default=True)
+    # full_name = models.CharField(max_length=255, blank=True)
 #    centres = models.ManyToManyField("Centre")
-    centre = models.ForeignKey("Centre") #TODO: FIXME
+    # centre  = models.CharField(max_length=255, blank=True)
+    centre = models.ForeignKey("Centre") # TODO: FIXME
     address = models.TextField(blank=True)
-    guardian = models.ForeignKey("Guardian", blank=True, null=True)    
+    school = models.CharField(max_length=255, blank=True)
+    office_number = models.CharField(max_length=12, blank=True)
+    grade = models.CharField(max_length=15, blank=True)
+    guardian_1 = models.ForeignKey("Guardian", blank=True, null=True, related_name="guardian_1")    
+    guardian_2 = models.ForeignKey("Guardian", blank=True, null=True, related_name="guardian_2")    
     exams = models.ManyToManyField("Exam", through="StudentExam")
     courses = models.ManyToManyField("Course", through="StudentCourse")
     worksheets = models.ManyToManyField("Worksheet", through="StudentWorksheet")
@@ -17,17 +30,69 @@ class Student(models.Model):
     sectional_tests = models.ManyToManyField("SectionalTest", through="StudentSectionalTest")
     completed = models.BooleanField(default=False)
 
+    @property
+    def get_type(self):
+        return self.user.user_type
+    @property
+    def get_email(self):
+        return self.user.email
+
+
+
     def __unicode__(self):
-        return self.full_name
+        return ( self.first_name + " " + self.last_name)
 
 
 
 class Tutor(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
-    full_name = models.CharField(max_length=255, blank=True)
+    title = models.CharField(max_length=10, blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    # full_name = models.CharField(max_length=255, blank=True)
+    pan_number = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255, blank=True)
+    cell_number = models.CharField(max_length=255, blank=True)
+    landline = models.CharField(max_length=12, blank=True)
+    office_number = models.CharField(max_length=12, blank=True)
+
+    @property
+    def get_type(self):
+        return self.user.user_type
+    @property
+    def get_email(self):
+        return self.user.email
+
+
 
     def __unicode__(self):
-        return self.full_name
+        return self.first_name + " " + self.last_name
+
+
+
+class Staff(models.Model):
+    
+    user = models.OneToOneField(settings.AUTH_USER_MODEL)
+    title = models.CharField(max_length=10, blank=True)
+    first_name = models.CharField(max_length=255, blank=True)
+    last_name = models.CharField(max_length=255, blank=True)
+    # full_name = models.CharField(max_length=255, blank=True)
+    pan_number = models.CharField(max_length=255, blank=True)
+    cell_number = models.CharField(max_length=255, blank=True)
+    landline = models.CharField(max_length=255, blank=True)
+    
+    @property
+    def get_email(self):
+        return self.user.email
+
+    @property
+    def get_type(self):
+        return self.user.user_type
+
+    
+    def __unicode__(self):
+        return self.first_name + " " + self.last_name
+
 
 
 class Guardian(models.Model):
@@ -36,6 +101,13 @@ class Guardian(models.Model):
     '''
     user = models.OneToOneField(settings.AUTH_USER_MODEL)
     full_name = models.CharField(max_length=255, blank=True)    
+    number = models.CharField(max_length=255, blank=True)   
+    email = models.CharField(max_length=255, blank=True)   
+    
+
+    @property
+    def get_type(self):
+        return self.user.user_type
 
     def __unicode__(self):
         return self.full_name

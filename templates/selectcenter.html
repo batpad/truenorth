@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated  %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+         <form action="" method="post">
+	   {% csrf_token %}
+            <h3 class="headingContent">Please select your center below</h3>
+            <div data-role="fieldcontain" class="selectCenter">
+
+                <select name="centre" id="selectYourCenter">
+		  <option value="All">All</option>
+		  {% for centre in centres %}
+		     <option value="{{ centre.name }}">{{ centre.name }}</option>
+		  {% endfor %}
+                    <!-- <option value="Colaba">Colaba</option> -->
+                    <!-- <option value="Vile-parle">Vile Parle</option> -->
+                    <!-- <option value="Jamnabhai-narsee">Jamnabhai Narsee</option> -->
+                </select>
+
+            </div> <!-- end select center -->
+            <div class="center">
+
+                    <input type="submit" value="SUBMIT" data-theme="e" data-inline="true">
+             </div> <!-- end center div -->
+
+        </form>
+
+   {% else %} 
+	  <p> You do not have  permissions to view this page </p>
+   {% endif %}
+
+{% else %} 
+<p> You have not logged in.Please <a href="/login/">log in</a> </p>
+{% endif %}
+
+
+
+
+
+        
+    
+{% endblock %}
+
+
+

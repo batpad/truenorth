@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated  %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+        <h3 class="headingContent">Add Profile: Staff</h3>         
+            
+        <div data-role="controlgroup" class="center controlTabs">
+            <a href="#profileStaff" data-role="button" data-theme="b" data-inline="true">Staff
+            </a><a href="#profileTutor" data-role="button" data-inline="true">Tutor
+            </a><a href="#profileStudent" data-role="button" data-inline="true">Student
+            </a><a href="#profileParent" data-role="button" data-inline="true">Parent</a>
+        </div>    
+
+        <form data-ajax="false" action="" method ="post">
+	  {% csrf_token %}
+            <div data-role="fieldcontain">
+                <label for="">Title:</label>
+                 <select name="title" id="">
+                    <option value="Mr" {% ifequal staff.title "Mr." %} selected {% endifequal %}>Mr.</option>
+                    <option value="Ms." {% ifequal staff.title "Ms." %} selected {% endifequal %}>Ms.</option>
+                    <option value="Mrs." {% ifequal staff.title "Mrs." %} selected {% endifequal %}>Mrs.</option>
+                    <option value="Dr." {% ifequal staff.title "Dr." %} selected {% endifequal %}>Dr.</option>
+                    <option value="Prof." {% ifequal staff.title "Prof." %} selected {% endifequal %}>Prof.</option>
+                </select>
+            </div>
+                        
+            <div data-role="fieldcontain">
+                <label for="">First Name</label>
+                <input type="text" name="first_name" id="" placeholder="" value="{{staff.first_name}}">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Last Name</label>
+                <input type="text" name="last_name" id="" placeholder="" value="{{staff.last_name}}">
+            </div>
+
+
+            <div data-role="fieldcontain">
+                <label for="textinput-fc">Email</label>
+                <input type="email" name="email" id="" placeholder="" value="{{staff.get_email}}" readonly>
+            </div>
+ 
+            <div data-role="fieldcontain">
+                <label for="">Mobile No.</label>
+                <input type="tel" name="mobile" id="" placeholder="" value="{{staff.cell_number}}">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">Landline No.</label>
+                <input type="tel" name="landline" id="" placeholder="" value="{{staff.landline}}">
+            </div>
+
+            <div data-role="fieldcontain">
+                <label for="">PAN</label>
+                <input type="tel" name="pan_number" id="textinput-fc" placeholder="" value="{{staff.pan_number}}">
+            </div>
+          <input type="submit" value="SUBMIT" data-theme="e">
+          <input type="reset" value="CANCEL" data-theme="e">
+
+        </form>            
+            </div> <!-- end fieldcontain  -->  
+
+ 
+   {% else %} 
+	  <p> You do not have  permissions to view this page </p>
+   {% endif %}
+
+{% else %} 
+<p> You have not logged in.Please <a href="/login/">log in</a> </p>
+{% endif %}
+
+
+
+
+
+        
+    
+{% endblock %}
+
+
+

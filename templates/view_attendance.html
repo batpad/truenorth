@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block content %}
+        <h3 class="center headingContent">View attendance: Students</h3>
+
+        <div data-role="controlgroup" class="center controlTabs">
+            <a href="#attendanceStudents" data-role="button" data-theme="b" data-inline="true">Students
+            </a><a href="#attendanceTutors" data-role="button" data-inline="true">Tutors</a>
+        </div>    
+        <br>
+        
+        <div class="center datepickerButton">   
+            <h4>Set Date to Mark Attendance</h4>
+            <input type="text" class="datepicker" value="{{ date }}" id="attendanceDate">
+        </div>
+        
+        <br><br>
+
+        <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type Sanjukta, Nirmala or Godfrey here" class="dateAttendanceUl listWhiteGradient">
+	  {% for student in students %}
+	  <li data-icon="false" data-id="{{ student.student.user.id }}">
+                <div class="floatLeft">
+                    <h2>{{ student.student.first_name  }} {{ student.student.last_name  }}<span class="{% if student.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
+                    <p><strong>Attended 10 days over the last 3 months.</strong></p>
+                    <p><strong>Last month:</strong> some data here</p>
+                    <p><strong>Weekly:</strong> some data here</p>
+                </div>
+
+                <div class="floatRight">
+                    <a href="#" class="markAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a>
+                    <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a>
+                </div>
+                <div class="clear"></div>
+            </li>
+	  {% endfor %}
+            <!-- <li data-icon="false"> -->
+            <!--     <div class="floatLeft"> -->
+            <!--         <h2>Sanjukta Vagh<span class="none presentIcon">t</span></h2> -->
+            <!--         <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
+            <!--         <p><strong>Last month:</strong> some data here</p> -->
+            <!--         <p><strong>Weekly:</strong> some data here</p> -->
+            <!--     </div> -->
+
+            <!--     <div class="floatRight"> -->
+            <!--         <a href="#studentAttPopup" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a> -->
+            <!--         <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a> -->
+            <!--     </div> -->
+            <!--     <div class="clear"></div> -->
+            <!-- </li> -->
+            
+            <!-- <li data-icon="false"> -->
+            <!--     <div class="floatLeft"> -->
+            <!--         <h2>Godfrey Bishop</h2> -->
+            <!--         <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
+            <!--         <p><strong>Last month:</strong> some data here</p> -->
+            <!--         <p><strong>Weekly:</strong> some data here</p> -->
+            <!--     </div> -->
+
+            <!--     <div class="floatRight"> -->
+            <!--         <a href="#studentAttPopup" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a> -->
+            <!--         <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a> -->
+            <!--     </div> -->
+            <!--     <div class="clear"></div> -->
+            <!-- </li> -->
+
+            <!-- <li data-icon="false"> -->
+            <!--     <div class="floatLeft"> -->
+            <!--         <h2>Nitmala Pandey<span class="presentIconRed">t</span></h2> -->
+            <!--         <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
+            <!--         <p><strong>Last month:</strong> some data here</p> -->
+            <!--         <p><strong>Weekly:</strong> some data here</p> -->
+            <!--     </div> -->
+
+            <!--     <div class="floatRight"> -->
+            <!--         <a href="#studentAttPopup" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a> -->
+            <!--         <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a> -->
+            <!--     </div> -->
+            <!--     <div class="clear"></div> -->
+            <!-- </li> -->
+        </Ul>
+
+        <div data-role="popup" id="studentAttPopup" data-theme="d" data-overlay-theme="b" class="ui-content">
+            <h3 class="center">Mark attendance</h3>
+            <p class="center"><em>{{ date }}</em></p>
+            <br>
+            <form id ="attendanceform" data-ajax="false">
+                <p><strong>Attendance</strong></p>
+                <label>
+                    <input type="checkbox" name="checkbox-0" class="presentCheckbox">Present
+                </label>
+                <br>
+                <label><strong>Start time</strong>
+                    <input type="time" class="startTime">
+                </label>
+            <div class="center">
+	         
+	      <p><input type="submit" value="save"></p>
+                 <!-- <a href="index.html" data-role="button" data-rel="back" data-theme="b" data-inline="true" data-icon="false">Save</a> -->
+                 <a href="#" data-rel="back" data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-right cancelPopup">Cancel</a>
+            </div><!-- end div  -->
+         
+        </form>
+     </div> <!-- end popup  -->
+
+        <div data-role="popup" id="studentAttCal" data-theme="d" data-overlay-theme="b" class="ui-content">
+            <div class="dateCalendar">
+                <div class="main">
+                    <div class="custom-calendar-wrap">
+                        <div id="custom-inner" class="custom-inner">
+                            <div class="custom-header clearfix">
+                                <nav>
+                                    <span id="custom-prev" class="custom-prev"></span>
+                                    <span id="custom-next" class="custom-next"></span>
+                                    <span id="custom-current" class="custom-current" title="Got to current date">Today</span>
+                                </nav>
+                                <h2 id="custom-month" class="custom-month"></h2>
+                                <h3 id="custom-year" class="custom-year"></h3>
+                            </div> <!-- end custom header  -->
+                            <div id="calendar" class="fc-calendar-container"></div>
+                        </div> <!-- end custom inner  -->
+                    </div> <!-- end custom calendar wrap  -->
+                </div> <!-- end main  -->                            
+            </div> <!-- end date calendar  -->
+            <a href="#" data-rel="back" data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-right cancelPopup">Cancel</a>
+        </div><!-- end popup  -->    
+
+        
+    
+{% endblock %}
+
+
+

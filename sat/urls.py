@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 
+
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -13,11 +14,32 @@ urlpatterns = patterns('',
     url(r'^home/(?P<user_type>.*)$', 'sat.truenorth.views.home', name='home'),
     # Uncomment the admin/doc line below to enable admin documentation:
     #url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
+    url(r'logout/', 'sat.login.views.logout_user'),
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
 )
+# These are the URLs for truenorth core
 
-urlpatterns += patterns('django.views.generic.simple', 
-    url(r'^$', TemplateView.as_view(template_name='index.html')),
+urlpatterns += patterns('sat.truenorth.views', 
+    # url(r'^$', TemplateView.as_view(template_name='login.html')),
+    #  url(r'^base/$', TemplateView.as_view(template_name='base.html')),
+     url(r'^staff/$', 'viewstafflist'),
+     url(r'^selectcenter/$', 'selectcenter'),    
+     url(r'^redirectcentre/$', 'redirectcentre'),    
+     url(r'^menu/$', 'menu'),    
+     url(r'^students/$', 'viewstudentlist'),    
+     url(r'^tutors/$', 'viewtutorlist'), 
+     url(r'^student/add/$', 'add_student'),                       
+     url(r'^staff/add/$', 'add_staff'),
+     url(r'^tutor/add/$', 'add_tutor'),
+     url(r'^student/edit/(?P<iden>\d+)/$', 'edit_student'),                       
+     url(r'^tutor/edit/(?P<iden>\d+)/$', 'edit_tutor'),                  
+     url(r'^checkin/$', 'checkin'),
+     url(r'^has_attendance/$', 'has_attendance'),
+     url(r'^view_attendance/$', 'view_attendance'),
+
+       
 )
+
+
+

@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated  %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+        <h3 class="headingContent">View Profiles: Staff</h3>
+
+	
+        
+        <div data-role="controlgroup" class="center controlTabs">
+            <a href="#viewProfileStaff" data-role="button" data-theme="b" data-inline="true">Staff
+            </a><a href="#viewProfileTutor" data-role="button"data-inline="true">Tutors
+            </a><a href="#viewProfileStudent" data-role="button" data-inline="true">Students
+            </a><a href="#viewProfileParent" data-role="button" data-inline="true">Parents</a>
+        </div>    
+        
+        <br>
+            
+        <ul data-role="listview" data-inset="true" data-theme="c" data-filter="true" data-filter-placeholder="Type a staff member's name to narrow down the list" class="listWhiteGradient">
+	  {% for tutor in tutors  %}
+            <li data-icon="false">
+                <div class="floatLeft">
+                    <h2>{{ tutor.first_name  }} {{ tutor.last_name  }}</h2>
+                    <p>{{tutor.get_email}}</p>
+                    <p> {{tutor.cell_number}}/{{tutor.landline}}</p>
+                    <p>PAN No: {{tutor.pan_number}}</p>
+                </div>
+                <span class="buttonCustom">
+                    <a href="/tutor/edit/{{tutor.id}}/" class="buttonCustom floatRight" data-role="button">Edit</a>
+                </span>
+                <div class="clear"></div>    
+            </li>
+	    {% endfor %}
+            
+
+            
+        <!--     <li data-icon="false"> -->
+        <!--         <div class="floatLeft"> -->
+        <!--             <h2>Sanjukta Vagh</h2> -->
+        <!--             <p>sanjuktavagh@gmail.com</p> -->
+        <!--             <p> 2202 1876 / 98734 73632</p> -->
+        <!--             <p>PAN No: 984ADUS987</p> -->
+        <!--         </div> -->
+        <!--         <span class="buttonCustom"> -->
+        <!--             <a href="#profileStaff" class="buttonCustom floatRight" data-role="button">Edit</a> -->
+        <!--         </span> -->
+        <!--         <div class="clear"></div>     -->
+        <!--     </li> -->
+            
+        <!--     <li data-icon="false"> -->
+        <!--         <div class="floatLeft"> -->
+        <!--             <h2>Nirmala Pandey</h2> -->
+        <!--             <p>nirmala-pandey@yahoo.co.in</p> -->
+        <!--             <p class="smallFont"> 2882 8834 / 98734 73632</p> -->
+        <!--             <p class="smallestFont">PAN No: 984ADUS987</p> -->
+        <!--         </div>     -->
+        <!--         <span class="buttonCustom"> -->
+        <!--             <a href="#profileStaff" class="buttonCustom floatRight" data-role="button">Edit</a> -->
+        <!--         </span> -->
+        <!--         <div class="clear"></div>     -->
+        <!--     </li> -->
+
+        <!--     <li data-icon="false"> -->
+        <!--         <div class="floatLeft"> -->
+        <!--             <h2>Godfrey Bishop</h2> -->
+        <!--             <p>sanjuktavagh@gmail.com</p> -->
+        <!--             <p> 2202 1876 / 98734 73632</p> -->
+        <!--             <p>PAN No: 984ADUS987</p> -->
+        <!--         </div>     -->
+        <!--         <span class="buttonCustom"> -->
+        <!--             <a href="#profileStaff" class="buttonCustom floatRight" data-role="button">Edit</a> -->
+        <!--         </span> -->
+        <!--         <div class="clear"></div>     -->
+        <!--     </li> -->
+        <!-- </ul> -->
+ 
+   {% else %} 
+	  <p> You do not have  permissions to view this page </p>
+   {% endif %}
+
+{% else %} 
+<p> You have not logged in.Please <a href="/login/">log in</a> </p>
+{% endif %}
+
+
+
+
+
+        
+    
+{% endblock %}
+
+
+

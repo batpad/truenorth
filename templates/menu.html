@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated  %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+        <h3 class="headingContent">Select an option</h3>
+
+
+
+        <div data-role="collapsible-set" data-theme="b" data-content-theme="c" id="menuOptAccordion" data-collapsed-icon="arrow-d" data-expanded-icon="arrow-u">
+            <div data-role="collapsible">
+                <h2>Attendance</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="#attendanceStudents">Students</a></li>
+                    <li><a href="#attendanceTutors">Tutors</a></li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h2>View Profiles</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="/staff/">Staff</a></li>
+                    <li><a href="/tutors/">Tutors</a></li>
+                    <li><a href="/students/">Students</a></li>
+                    <li><a href="#viewProfileParent">Parents</a></li>
+                </ul>
+            </div>
+
+            <div data-role="collapsible">
+                <h2>Add Profile</h2>
+                <ul data-role="listview" data-icon="false">
+                    <li><a href="/staff/add/">Staff</a></li>
+                    <li><a href="/tutor/add/">Tutors</a></li>
+                    <li><a href="/student/add/">Students</a></li>
+                    <li><a href="#profileParent">Parents</a></li>
+                </ul>
+            </div>
+        </div>
+ 
+   {% else %} 
+	  <p> You do not have  permissions to view this page </p>
+   {% endif %}
+
+{% else %} 
+<p> You have not logged in.Please <a href="/login/">log in</a> </p>
+{% endif %}
+
+
+
+
+
+        
+    
+{% endblock %}
+
+
+
+
+
+

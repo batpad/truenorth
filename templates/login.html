@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <h3 class="headingContent">Login</h3>
+		<div class="notify">{{ state }}</div>
+        <form action="/login/" class="loginForm" method="post">
+	   {% csrf_token %}
+	   {% if next %}
+	   <input type="hidden" name="next" value="{{ next }}" />
+	   {% endif %}
+
+            <div data-role="fieldcontain">
+                <label for="username-login">Username</label>
+                <input type="text" name="username" id="username-login" value="" required>
+            </div>
+    
+            <div data-role="fieldcontain">
+                <label for="username-password">Password:</label>
+                <input type="password" name="password" id="username-password" value="" autocomplete="off" required>             
+            </div>
+            <div class="center">
+
+                    <input type="submit" value="SUBMIT" data-theme="e" data-inline="true">
+
+                <br>
+                <a href="#forgotpassword" class="smallFont" data-rel="popup" data-position-to="window" data-inline="true" data-transition="pop">Forgot Password?</a>
+            </div>
+
+                    
+            <div class="center">                
+                <div data-role="popup" id="popupMenu" data-theme="a" class="popup">
+                    <div data-role="popup" id="forgotpassword" data-theme="a" class="ui-corner-all" data-overlay-theme="b">
+                        <form>
+                            <div class="popupDiv">
+                                <h3>Help us recover your password</h3>
+                                <label for="passwordRecovery" class="ui-hidden-accessible">Email address:</label>
+                                <input type="email" name="passwordRecovery" id="passwordRecovery" value="" placeholder="Email" data-theme="a">
+                                <button type="submit" data-theme="b">Submit</button>
+                                <a href="#" data-rel="back" data-role="button" data-theme="d" data-icon="delete" data-iconpos="notext" class="ui-btn-right cancelPopup">Cancel</a>        
+                            </div>
+                        </form>
+                    </div>
+                </div> <!-- end popup menu -->
+                
+            </div> <!-- end div center  -->
+            
+        </form>
+        
+    
+{% endblock %}
+
+
+
