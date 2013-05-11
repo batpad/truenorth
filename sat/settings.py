@@ -13,7 +13,7 @@ ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
-INTERNAL_IPS = ('127.0.0.1',)
+INTERNAL_IPS = ('127.0.0.1','192.168.2.106',)
 
 PROJECT_ROOT = os.path.normpath(os.path.dirname(__file__))
 
