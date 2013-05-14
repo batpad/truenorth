@@ -26,7 +26,7 @@ def redirect_user(user,username):
 
 
 def login_user(request):
-    state = "Please log in below..."
+    state = None
     username = password = ''
     print username 
     print password 
