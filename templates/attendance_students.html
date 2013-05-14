@@ -20,10 +20,14 @@
 
 <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" class="dateAttendanceUl listWhiteGradient">
 	<li data-icon="false" class="center">
-			<h2>Kabir Kukreti</h2>
-			<p><strong>Attended 10 days over the last 3 months.</strong></p>
-			<p><strong>Last month:</strong> some data here</p>
-			<p><strong>Weekly:</strong> some data here</p>
+	                <h2>{{student.first_name}} {{student.last_name}}</h2>
+			<p><strong>This month:</strong> {{ student.student.user.get_attendance_for_this_month.attendance }} out of {{ student.student.user.get_attendance_for_this_month.total_days }}</p>
+			<p><strong>This week:</strong> {{ student.student.user.get_attendance_for_this_week.attendance }} out of {{ student.student.user.get_attendance_for_this_week.total_days }}</p>
+			<p><strong>Since admission:</strong> {{ student.student.user.get_attendance_from_admission.attendance }} out of {{ student.student.user.get_attendance_from_admission.total_days }}</p>
+			<!-- <h2>Kabir Kukreti</h2> -->
+			<!-- <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
+			<!-- <p><strong>Last month:</strong> some data here</p> -->
+			<!-- <p><strong>Weekly:</strong> some data here</p> -->
 	</li>            
 </ul>
 

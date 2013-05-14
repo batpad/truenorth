@@ -16,10 +16,13 @@ def home(request, user_type):
 def students(request):
     return HttpResponse("We are students of true north")
 
+def attendance(request,iden):
+    student = Student.objects.get(id=iden)
+    return render_to_response('attendance_students.html',{'student':student},context_instance=RequestContext(request))
+
 
 def viewstafflist(request):
     staff = Staff.objects.all()
-
     return render_to_response('view_profile_staff.html',{'staff':staff}, context_instance=RequestContext(request))
 
 def viewstudentlist(request):
