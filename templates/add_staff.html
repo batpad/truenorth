@@ -8,10 +8,9 @@
         <h3 class="headingContent">Add Profile: Staff</h3>         
             
         <div data-role="controlgroup" class="center controlTabs">
-            <a href="#profileStaff" data-role="button" data-theme="b" data-inline="true">Staff
-            </a><a href="#profileTutor" data-role="button" data-inline="true">Tutor
-            </a><a href="#profileStudent" data-role="button" data-inline="true">Student
-            </a><a href="#profileParent" data-role="button" data-inline="true">Parent</a>
+            <a href="/staff/add/" data-role="button" data-theme="b" data-inline="true">Staff
+            </a><a href="/tutor/add/" data-role="button" data-inline="true">Tutor
+            </a><a href="/student/add/" data-role="button" data-inline="true">Student</a>
         </div>    
 
         <form data-ajax="false" action="" method ="post">
@@ -29,12 +28,12 @@
                         
             <div data-role="fieldcontain">
                 <label for="">First Name</label>
-                <input type="text" name="first_name" id="" placeholder="" value="">
+                <input type="text" name="first_name" id="" placeholder="" value="" required>
             </div>
 
             <div data-role="fieldcontain">
                 <label for="">Last Name</label>
-                <input type="text" name="last_name" id="" placeholder="" value="">
+                <input type="text" name="last_name" id="" placeholder="" value="" required>
             </div>
             
             <div data-role="fieldcontain">
