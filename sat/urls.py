@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.views.generic import RedirectView
 
 
 # Uncomment the next two lines to enable the admin:
@@ -10,6 +11,7 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'sat.views.home', name='home'),
     url(r'login/', include('sat.login.urls')),
+    url(r'^$', RedirectView.as_view(url='/login/')),    
     # url(r'^sat/', include('sat.foo.urls')),
     url(r'^home/(?P<user_type>.*)$', 'sat.truenorth.views.home', name='home'),
     # Uncomment the admin/doc line below to enable admin documentation:
