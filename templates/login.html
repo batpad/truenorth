@@ -3,7 +3,9 @@
 {% block content %}
 
         <h3 class="headingContent">Login</h3>
+		{% if state %}
 		<div class="notify">{{ state }}</div>
+		{% endif %}
         <form action="/login/" class="loginForm" method="post">
 	   {% csrf_token %}
 	   {% if next %}

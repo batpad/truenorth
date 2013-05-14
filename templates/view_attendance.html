@@ -4,7 +4,7 @@
         <h3 class="center headingContent">View attendance: Students</h3>
 
         <div data-role="controlgroup" class="center controlTabs">
-            <a href="#attendanceStudents" data-role="button" data-theme="b" data-inline="true">Students
+            <a href="/view_attendance/" data-role="button" data-theme="b" data-inline="true">Students
             </a><a href="#attendanceTutors" data-role="button" data-inline="true">Tutors</a>
         </div>    
         <br>
@@ -22,8 +22,9 @@
                 <div class="floatLeft">
                     <h2>{{ student.student.first_name  }} {{ student.student.last_name  }}<span class="{% if student.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
                     <p><strong>Attended 10 days over the last 3 months.</strong></p>
-                    <p><strong>Last month:</strong> some data here</p>
-                    <p><strong>Weekly:</strong> some data here</p>
+                    <p><strong>This month:</strong> {{ student.student.user.get_attendance_for_this_month.attendance }} out of {{ student.student.user.get_attendance_for_this_month.total_days }}</p>
+                    <p><strong>This week:</strong> {{ student.student.user.get_attendance_for_this_week.attendance }} out of {{ student.student.user.get_attendance_for_this_week.total_days }}</p>
+                    <p><strong>Since admission:</strong> {{ student.student.user.get_attendance_from_admission.attendance }} out of {{ student.student.user.get_attendance_from_admission.total_days }}</p>
                 </div>
 
                 <div class="floatRight">
@@ -91,6 +92,9 @@
                 <br>
                 <label><strong>Start time</strong>
                     <input type="time" class="startTime">
+                </label>
+                <label><strong>End time</strong>
+                    <input type="time" class="endTime">
                 </label>
             <div class="center">
 	         

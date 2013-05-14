@@ -6,10 +6,27 @@ from django.db.models import F
 import pdb
 
 from sat.login.models import MyUser
+from sat.truenorth.models import *
+
+def redirect_user(user,username):
+    user_type = user.user_type
+    if user_type != 'unknown':
+       
+               # # For checking type of user 
+        User_Instance=MyUser.objects.get(email=username).get_category()
+        import pdb
+        pdb.set_trace()
+        return HttpResponse("test")
+    #     if (User_Instance == "superuser" or User_Instance == "admin"):
+    #         return HttpResponseRedirect("/redirectcentre/")
+    #     # return HttpResponse("Teacher")
+    #     if (User_Instance == "STUDENT"):
+    #         return HttpResponseRedirect("/attendance/"+user.id+"/")
+    # raise Http404
 
 
 def login_user(request):
-    state = "Please log in below..."
+    state = None
     username = password = ''
     print username 
     print password 
@@ -22,22 +39,26 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                state = "You're successfully logged in!"
-                user_type = user.user_type
-                if user_type != 'unknown':
-                    # redirect_url = "/home/%s" % user_type
-                    state = "You have logged in"
+                # state = "You're successfully logged in!"
+                # redirect_user(user,username)
+               #  user_type = user.user_type
+               #  if user_type != 'unknown':
+               #      # redirect_url = "/home/%s" % user_type
+               #      state = "You have logged in"
                 
                     
                
                # # For checking type of user 
                 User_Instance=MyUser.objects.get(email=username).get_category()
                 if (User_Instance == "superuser" or User_Instance == "admin"):
+                    
                     return HttpResponseRedirect("/redirectcentre/")
                    # return HttpResponse("Teacher")
-               # else:
-               #     if User_Instance == "STUDENT":
-               #         return HttpResponse("Student")
+                else:
+                    if User_Instance == "student":
+                        u = MyUser.objects.get(id=user.id)
+                        student = Student.objects.get(user=u)
+                        return HttpResponseRedirect("/attendance/"+str(student.id)+"/")
                #     else:
                #  	if User_Instance == "GAURDIAN":
                #  		return HttpResponse("Gaurdian")

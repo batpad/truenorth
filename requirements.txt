@@ -7,4 +7,6 @@ django-debug-toolbar
 sorl-thumbnail
 Markdown
 django-markitup
+# dateutil should be kept at 1.5 for python 2.7.x, dateutil 2.0 is for python 3.x
+python-dateutil==1.5
 south
