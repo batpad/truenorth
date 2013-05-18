@@ -39,6 +39,7 @@ urlpatterns += patterns('sat.truenorth.views',
      url(r'^checkin/$', 'checkin'),
      url(r'^has_attendance/$', 'has_attendance'),
      url(r'^view_attendance/$', 'view_attendance'),
+     url(r'^view_attendance_tutor/$', 'view_attendance_tutor'),	
      url(r'^attendance/(?P<iden>\d+)/$', 'attendance'),
 
        
