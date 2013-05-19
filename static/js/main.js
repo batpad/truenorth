@@ -1,8 +1,11 @@
     $(document).ready(function(){
-       var cal = $('#calendar').calendario({
-           displayWeekAbbr : true,
-       });
-       
+	if ($('#calendar').length === 0)
+	    return;
+		
+	    var cal = $('#calendar').calendario({
+		displayWeekAbbr : true,
+	    });
+	
        var $month = $( '#custom-month' ).html( cal.getMonthName() ),
             $year = $( '#custom-year' ).html( cal.getYear() );
 
