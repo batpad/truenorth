@@ -134,9 +134,10 @@
 	});
 	$( '.datepicker' ).pickadate().on("change", function() {
 	    var date = $(this).val();
-	    var url = "/view_attendance/";
+	    //var url = "/view_attendance/";
+        var url = location.pathname;
 	    if (date) {
-		url += "?date=" + date;
+            url += "?date=" + date;
 	    }
 	    location.href = url;
 	});
