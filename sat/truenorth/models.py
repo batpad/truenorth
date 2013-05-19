@@ -78,6 +78,7 @@ class Staff(models.Model):
     last_name = models.CharField(max_length=255, blank=True)
     # full_name = models.CharField(max_length=255, blank=True)
     pan_number = models.CharField(max_length=255, blank=True)
+    address = models.CharField(max_length=255, blank=True)
     cell_number = models.CharField(max_length=255, blank=True)
     landline = models.CharField(max_length=255, blank=True)
     

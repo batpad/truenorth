@@ -150,6 +150,7 @@ def edit_staff(request,iden):
         staff.cell_number = request.POST['mobile']
         staff.landline = request.POST['landline'] 
         staff.pan_number = request.POST['pan_number']
+        staff.address = request.POST['address']
         staff.save()
         return HttpResponseRedirect("/staff/")
 
@@ -216,6 +217,7 @@ def add_staff(request):
             info_dict['last_name'] = request.POST['last_name']
             info_dict['pan_number'] = request.POST['pan_number']
             info_dict['cell_number'] = request.POST['mobile']
+            info_dict['address'] = request.POST['address']
             info_dict['landline'] = request.POST['landline']
             staff = Staff.objects.create(**info_dict)
             staff.save()
@@ -347,9 +349,9 @@ def selectcenter(request):
         request.session["centre"] = centre
         return HttpResponseRedirect("/menu/")
         # # Wat da F** x-(
-        # response.set_cookie( 'centre', centre)
-        # # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
-        # return response
+        response.set_cookie( 'centre', centre)
+        # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
+        return response
     centres = Centre.objects.all()
     return render_to_response('selectcenter.html',{'centres':centres},context_instance=RequestContext(request))
 
