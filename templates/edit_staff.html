@@ -5,14 +5,15 @@
 {% if user.is_authenticated  %}
 
    {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
-        <h3 class="headingContent">Add Profile: Staff</h3>         
-            
+        <h3 class="headingContent">Edit Profile: Staff: {{ staff.first_name }} {{ staff.last_name }}</h3>         
+           <!-- 
         <div data-role="controlgroup" class="center controlTabs">
             <a href="#profileStaff" data-role="button" data-theme="b" data-inline="true">Staff
             </a><a href="#profileTutor" data-role="button" data-inline="true">Tutor
             </a><a href="#profileStudent" data-role="button" data-inline="true">Student
             </a><a href="#profileParent" data-role="button" data-inline="true">Parent</a>
         </div>    
+            -->
 
         <form data-ajax="false" action="" method ="post">
 	  {% csrf_token %}
