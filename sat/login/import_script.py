@@ -19,19 +19,24 @@ def import_things(csv_path):
             student_user.save()
         
         # Create Guardian
+            
 
             guardian1_email = row[16]
-            guardian1_tel = row[17]
-            #FIXME: so this is a tricky one .. if guardian1 with email exists, just set student.guardian_1 to be that guardian object. eg. if a parent has two children taking classes.
-            guardian1_user = MyUser.objects.create_user(guardian1_email)
-            guardian1_user.set_password(guardian1_tel)
-            guardian1_user.save()
-            guardian1 =Guardian()
-            guardian1.user = guardian1_user
-            guardian1.full_name = row[18]
-            guardian1.number = row[17]
-            guardian1.email = row[16]
-            guardian1.save()
+            guardian_qset = Guardian.objects.filter(user__email=guardian1_email)
+            if guardian_qset.count() > 0:
+                guardian1 = guardian_qset[0]
+            else:
+                guardian1_tel = row[17]
+
+                guardian1_user = MyUser.objects.create_user(guardian1_email)
+                guardian1_user.set_password(guardian1_tel)
+                guardian1_user.save()
+                guardian1 =Guardian()
+                guardian1.user = guardian1_user
+                guardian1.full_name = row[18]
+                guardian1.number = row[17]
+                guardian1.email = row[16]
+                guardian1.save()
             guardian2 = None # For the time being
             
         # Now the student
