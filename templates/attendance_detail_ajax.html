@@ -1,0 +1,3 @@
+            <p><strong>This month:</strong> {{ attendee.get_attendance_for_this_month.attendance }} out of {{ attendee.get_attendance_for_this_month.total_days }}</p>
+                    <p><strong>This week:</strong> {{ attendee.get_attendance_for_this_week.attendance }} out of {{ attendee.get_attendance_for_this_week.total_days }}</p>
+                    <p><strong>Since admission:</strong> {{ attendee.get_attendance_from_admission.attendance }} out of {{ attendee.get_attendance_from_admission.total_days }}</p>

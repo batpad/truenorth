@@ -20,6 +20,11 @@ def attendance(request,iden):
     student = Student.objects.get(id=iden)
     return render_to_response('attendance_students.html',{'student':student},context_instance=RequestContext(request))
 
+def attendance_detail_ajax(request,iden):
+    attendee = MyUser.objects.get(id=iden)
+    return render_to_response('attendance_detail_ajax.html',{'attendee':attendee},context_instance=RequestContext(request))
+
+
 
 def viewstafflist(request):
     staff = Staff.objects.all()
