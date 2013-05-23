@@ -141,6 +141,28 @@
 	    }
 	    location.href = url;
 	});
+
+	$('.viewAttendanceBtn').click(function(e) {
+		e.preventDefault();
+		var $this = $(this);
+		//$this.hide();
+		
+		
+		var $li = $this.closest('li');
+		if (!$li.find('.attendance_detail').is(":visible")) {
+			var id = $li.attr("data-id");
+			$this.find('.ui-btn-text').text("Loading...");		
+			var url = "/attendance_detail_ajax/" + id + "/";
+			$.get(url, {}, function(html) {
+				$li.find('.attendance_detail').html(html).show();
+				$this.find('.ui-btn-text').text("Hide Attendance Detail");
+			});
+		} else {
+			$li.find('.attendance_detail').hide();
+			$this.find('.ui-btn-text').text("View Attendance Detail");
+
+		}
+	});
 /*
     $('#attendanceform').submit(function (event) {
      event.preventDefault();

@@ -16,20 +16,20 @@
         
         <br><br>
 
-        <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type Sanjukta, Nirmala or Godfrey here" class="dateAttendanceUl listWhiteGradient">
+        <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type student name here" class="dateAttendanceUl listWhiteGradient">
 	  {% for student in students %}
 	  <li data-icon="false" data-id="{{ student.student.user.id }}">
                 <div class="floatLeft">
                     <h2>{{ student.student.first_name  }} {{ student.student.last_name  }}<span class="{% if student.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
                     <!-- <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
-                    <p><strong>This month:</strong> {{ student.student.user.get_attendance_for_this_month.attendance }} out of {{ student.student.user.get_attendance_for_this_month.total_days }}</p>
-                    <p><strong>This week:</strong> {{ student.student.user.get_attendance_for_this_week.attendance }} out of {{ student.student.user.get_attendance_for_this_week.total_days }}</p>
-                    <p><strong>Since admission:</strong> {{ student.student.user.get_attendance_from_admission.attendance }} out of {{ student.student.user.get_attendance_from_admission.total_days }}</p>
+
+		    <div class = "attendance_detail" style="display:none;">
+		    </div>
                 </div>
 
                 <div class="floatRight">
                     <a href="#" class="markAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a>
-                    <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a>
+                    <a href="#" class="viewAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View Attendance Detail</a>
                 </div>
                 <div class="clear"></div>
             </li>

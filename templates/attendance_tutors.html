@@ -22,12 +22,14 @@
                 <div class="floatLeft">
 		  
                     <h2>{{ tutor.tutor.first_name  }} {{ tutor.tutor.last_name  }}<span class="{% if tutor.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
+		    <div class = "attendance_detail" style="display:none;">
+		    </div>
 
                 </div>
 
                 <div class="floatRight">
                     <a href="#" class="markAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a>
-                    <a href="#studentAttCal" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a>
+                   <a href="#" class="viewAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View Attendance Detail</a>
                 </div>
                 <div class="clear"></div>
             </li>
