@@ -41,6 +41,8 @@ class Student(models.Model):
 
     def __unicode__(self):
         return ( self.first_name + " " + self.last_name)
+    class Meta:
+        ordering = ['first_name',]
 
 
 
