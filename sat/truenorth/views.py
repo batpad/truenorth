@@ -31,11 +31,14 @@ def viewstafflist(request):
     return render_to_response('view_profile_staff.html',{'staff':staff}, context_instance=RequestContext(request))
 
 def viewstudentlist(request):
-    if request.session['centre'] == "All":
+    try:
+        if request.session['centre'] == "All":
+            students = Student.objects.all()
+        else:
+            centre_obj = Centre.objects.get(name=request.session['centre'])
+            students  = Student.objects.filter(centre=centre_obj)
+    except:
         students = Student.objects.all()
-    else:
-        centre_obj = Centre.objects.get(name=request.session['centre'])
-        students  = Student.objects.filter(centre=centre_obj)
 
     return render_to_response('view_profile_students.html',{'students':students}, context_instance=RequestContext(request))
 
@@ -348,15 +351,27 @@ def redirectcentre(request):
 
 def selectcenter(request):
     if request.POST:
-        centre = request.POST['centre']
+        try:
+            centre = request.POST['centre']
         # I dont know why it does not update centre on assignment.It updates correctly if the key is made blank ...
-        request.session["centre"] = ""
-        request.session["centre"] = centre
-        return HttpResponseRedirect("/menu/")
+            request.session["centre"] = ""
+            request.session["centre"] = centre
+            response = HttpResponseRedirect("/menu/")
         # # Wat da F** x-(
-        response.set_cookie( 'centre', centre)
+            response.set_cookie( 'centre', centre)
         # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
-        return response
+            return response
+        except:
+            centre = "All"
+        # I dont know why it does not update centre on assignment.It updates correctly if the key is made blank ...
+            request.session["centre"] = ""
+            request.session["centre"] = centre
+            response = HttpResponseRedirect("/menu/")
+        # # Wat da F** x-(
+            response.set_cookie( 'centre', centre)
+        # return HttpResponse("centre:" +centre + "session: " + request.session["centre"])
+            return response
+
     centres = Centre.objects.all()
     return render_to_response('selectcenter.html',{'centres':centres},context_instance=RequestContext(request))
 
