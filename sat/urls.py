@@ -11,6 +11,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'sat.views.home', name='home'),
     url(r'login/', include('sat.login.urls')),
+    url(r'^change_password/$', 'django.contrib.auth.views.password_change'),
+    url(r'^password-changed/$', 'django.contrib.auth.views.password_change_done'),
     url(r'^$', RedirectView.as_view(url='/login/')),    
     # url(r'^sat/', include('sat.foo.urls')),
     url(r'^home/(?P<user_type>.*)$', 'sat.truenorth.views.home', name='home'),
@@ -21,7 +23,6 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 )
 # These are the URLs for truenorth core
-
 urlpatterns += patterns('sat.truenorth.views', 
     # url(r'^$', TemplateView.as_view(template_name='login.html')),
     #  url(r'^base/$', TemplateView.as_view(template_name='base.html')),
