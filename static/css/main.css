@@ -262,6 +262,10 @@
 
 /* form elements */
 
+label.ui-input-text {
+	font-weight: bold;
+}
+
 .ui-field-contain label.ui-input-text, .ui-field-contain label.ui-select {
     vertical-align: middle;
 }
