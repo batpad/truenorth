@@ -63,13 +63,14 @@
     text-align: center;
 }
 
-.notify {
+.notify, .errorlist {
     text-shadow: none;
     padding: 12px 4px;
     color: #fff;
     border: 1px solid #fff;
     text-align: center;
     background: #f6c74b;
+	margin: 0 0 10px 0;
 }
 
 .notify p {
@@ -241,18 +242,26 @@
     padding: 0.5em 15px;
 }
 
-.courseListLabel {
+.courseListLabel, .labelRelogin/*, .passwordChangeForm label*/ {
     padding: 10px 0 8px 0;
     display: block;
     float: left;
 }
 
-.courseList {
+.labelRelogin/*, .passwordChangeForm label*/ {
+	width: 20%;	
+}
+
+.courseList, .buttonRelogin/*, .passwordChangeForm div*/ {
     width: 78%;
     float: right;
     margin: 0;
 }
 
+/* .passwordChangeForm p {
+	overflow: hidden;
+}
+ */
 .courseList .ui-btn-inner {
     padding: .5em 20px;
 }
@@ -455,7 +464,7 @@ label.ui-input-text {
 /* media queries */
 
 @media all and (max-width: 447px){
-    .courseList, .courseListLabel {
+    .courseList, .courseListLabel, .labelRelogin, .buttonRelogin {
         float: left;
         width: 100%;
     }
