@@ -11,3 +11,6 @@ local_settings.py
 secret.txt
 Scripts/
 truenorth.dev
+mockup/
+start_server_maskara.bat
+icomoon16617/
