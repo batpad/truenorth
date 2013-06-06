@@ -155,11 +155,11 @@
 			var url = "/attendance_detail_ajax/" + id + "/";
 			$.get(url, {}, function(html) {
 				$li.find('.attendance_detail').html(html).show();
-				$this.find('.ui-btn-text').text("Hide Attendance Detail");
+				$this.find('.ui-btn-text').text("Hide Details");
 			});
 		} else {
 			$li.find('.attendance_detail').hide();
-			$this.find('.ui-btn-text').text("View Attendance Detail");
+			$this.find('.ui-btn-text').text("View Details");
 
 		}
 	});
