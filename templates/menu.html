@@ -4,7 +4,7 @@
 
 {% if user.is_authenticated  %}
 
-   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' or user.user_type == 'staff' or user.user_type == 'tutor' %}
         <h3 class="headingContent">Select an option</h3>
 
 
@@ -14,15 +14,19 @@
                 <h2>Attendance</h2>
                 <ul data-role="listview" data-icon="false">
                     <li><a href="/view_attendance/">Students</a></li>
+                    {% if user.user_type != 'tutor' %}
                     <li><a href="/view_attendance_tutor/">Tutors</a></li>
+                    {% endif %}
                 </ul>
             </div>
 
             <div data-role="collapsible">
                 <h2>View Profiles</h2>
                 <ul data-role="listview" data-icon="false">
+                    {% if user.user_type != 'tutor' %}
                     <li><a href="/staff/">Staff</a></li>
                     <li><a href="/tutors/">Tutors</a></li>
+                    {% endif %}
                     <li><a href="/students/">Students</a></li>
 
                 </ul>
@@ -31,8 +35,10 @@
             <div data-role="collapsible">
                 <h2>Add Profile</h2>
                 <ul data-role="listview" data-icon="false">
+                    {% if user.user_type != 'tutor' %}
                     <li><a href="/staff/add/">Staff</a></li>
                     <li><a href="/tutor/add/">Tutors</a></li>
+                    {% endif %}
                     <li><a href="/student/add/">Students</a></li>
 
                 </ul>
