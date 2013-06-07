@@ -3,22 +3,23 @@
 {% block content %}
 {% if user.is_authenticated  %}
 
-   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' or user.user_type == 'staff' or user.user_type == 'tutor' %}
         <h3 class="headingContent">View Profiles: Students</h3>
 
 	
         
         <div data-role="controlgroup" class="center controlTabs">
+            {% if user.user_type != 'tutor' %}
             <a href="/staff" data-role="button" data-inline="true">Staff
             </a><a href="/tutors" data-role="button"data-inline="true">Tutors
-            </a><a href="/students" data-role="button" data-theme="b" data-inline="true">Students</a>
+            </a>{% endif %}<a href="/students" data-role="button" data-theme="b" data-inline="true">Students</a>
         </div>    
         
         <br>
             
         <ul data-role="listview" data-inset="true" data-theme="c" data-filter="true" data-filter-placeholder="Type a student's name to filter the list" class="listWhiteGradient">
 	  {% for student in students  %}
-            <li data-icon="false">
+            <li data-icon="false" data-filtertext="{{ student.first_name  }} {{ student.last_name  }}">
                 <div class="floatLeft">
                     <h2>{{ student.first_name  }} {{ student.last_name  }}</h2>
                     <p>Email: {{student.get_email}}</p>

@@ -459,8 +459,7 @@ def view_attendance(request):
         today = timezone.now()
     else:
         today = datetime.datetime.strptime(date, "%d %b, %Y")
-    students = Student.objects.all()
-    students = [student.user.get_attendance_data(today) for student in Student.objects.all()]
+    students = [student.user.get_attendance_data(today) for student in Student.objects.filter(is_active=True)]
     return render_to_response('view_attendance.html',{'students':students, 'date': today}, context_instance=RequestContext(request))
 
 def view_attendance_tutor(request):
@@ -470,7 +469,7 @@ def view_attendance_tutor(request):
     else:
         today = datetime.datetime.strptime(date, "%d %b, %Y")
     # Is this line needed ?
-    tutors = Tutor.objects.all()
+    #tutors = Tutor.objects.all()
 
     tutors = [tutor.user.get_attendance_data(today) for tutor in Tutor.objects.all()]
     return render_to_response('attendance_tutors.html',{'tutors':tutors, 'date': today}, context_instance=RequestContext(request))

@@ -4,7 +4,7 @@
 
 {% if user.is_authenticated  %}
 
-   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' or user.user_type == 'staff' %}
         <h3 class="headingContent">Edit Profile: Student: {{ student.first_name }} {{ student.last_name }}</h3>
 
        <!-- 

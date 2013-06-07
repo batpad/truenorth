@@ -5,7 +5,7 @@
 
         <div data-role="controlgroup" class="center controlTabs">
             <a href="/view_attendance/" data-role="button" data-theme="b" data-inline="true">Students
-            </a><a href="/view_attendance_tutor/" data-role="button" data-inline="true">Tutors</a>
+            </a>{% if user.user_type != 'tutor' %}<a href="/view_attendance_tutor/" data-role="button" data-inline="true">Tutors</a>{% endif %}
         </div>    
         <br>
         
@@ -18,7 +18,7 @@
 
         <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type a student's name to filter the list" class="dateAttendanceUl listWhiteGradient">
 	  {% for student in students %}
-	  <li data-icon="false" data-id="{{ student.student.user.id }}">
+	  <li data-icon="false" data-id="{{ student.student.user.id }}" data-filtertext="{{ student.student.first_name  }} {{ student.student.last_name  }}">
                 <div class="floatLeft">
                     <h2>{{ student.student.first_name  }} {{ student.student.last_name  }}<span class="{% if student.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
                     <!-- <p><strong>Attended 10 days over the last 3 months.</strong></p> -->
@@ -29,7 +29,8 @@
 
                 <div class="floatRight">
                     <a href="#" class="markAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">Mark/Edit</a>
-                    <a href="#" class="viewAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View Attendance Detail</a>
+                    <a href="#" class="viewAttendanceBtn" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View Details</a>
+                    <a href="#" class="" data-rel="popup" data-role="button" data-inline="true" data-mini="true" data-theme="e" data-position-to="window" data-transition="pop">View on Calendar</a>
                 </div>
                 <div class="clear"></div>
             </li>

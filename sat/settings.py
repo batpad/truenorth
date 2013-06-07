@@ -7,6 +7,9 @@ TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 JSON_DEBUG = DEBUG
 
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False
+}
 
 ADMINS = (
     ('Sanjay B', 'sanjay@therateof.com'),
@@ -213,13 +216,6 @@ LOGGING = {
 }
 
 
-if DEBUG:
-    EMAIL_HOST = 'localhost'
-    EMAIL_PORT = 1025
-    EMAIL_HOST_USER = ''
-    EMAIL_HOST_PASSWORD = ''
-    EMAIL_USE_TLS = False
-    DEFAULT_FROM_EMAIL = 'testing@locahost.com'
 
 
 try:
