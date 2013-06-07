@@ -19,7 +19,7 @@
             
         <ul data-role="listview" data-inset="true" data-theme="c" data-filter="true" data-filter-placeholder="Type a staff member's name to filter the list" class="listWhiteGradient">
 	  {% for astaff in staff  %}
-            <li data-icon="false">
+            <li data-icon="false" data-filtertext="{{ astaff.first_name  }} {{ astaff.last_name  }}">
                 <div class="floatLeft">
                     <h2>{{ astaff.first_name  }} {{ astaff.last_name  }}</h2>
                     <p> {{astaff.get_email}}</p>

@@ -4,7 +4,8 @@
 
 {% if user.is_authenticated  %}
 
-   {% if user.user_type == 'admin' or user.user_type == 'superuser' %}
+
+   {% if user.user_type == 'admin' or user.user_type == 'superuser' or user.user_type == 'staff' %}
         <h3 class="headingContent">View Profiles: Tutors</h3>
 
 	
@@ -19,7 +20,7 @@
             
         <ul data-role="listview" data-inset="true" data-theme="c" data-filter="true" data-filter-placeholder="Type a tutor's name to filter the list" class="listWhiteGradient">
 	  {% for tutor in tutors  %}
-            <li data-icon="false">
+            <li data-icon="false" data-filtertext="{{ tutor.first_name  }} {{ tutor.last_name  }}">
                 <div class="floatLeft">
                     <h2>{{ tutor.first_name  }} {{ tutor.last_name  }}</h2>
                     <p>{{tutor.get_email}}</p>

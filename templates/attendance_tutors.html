@@ -18,7 +18,7 @@
 
         <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type a tutor's name to filter the list" class="dateAttendanceUl listWhiteGradient">
 	  {% for tutor in tutors %}
-	  <li data-icon="false" data-id="{{ tutor.tutor.user.id }}">
+	  <li data-icon="false" data-id="{{ tutor.tutor.user.id }}" data-filtertext="{{ tutor.tutor.first_name  }} {{ tutor.tutor.last_name  }}">
                 <div class="floatLeft">
 		  
                     <h2>{{ tutor.tutor.first_name  }} {{ tutor.tutor.last_name  }}<span class="{% if tutor.checkin %} presentIconGreen {% else %} none {% endif %} presentIcon">t</span></h2>
