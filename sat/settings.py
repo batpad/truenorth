@@ -6,7 +6,7 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 THUMBNAIL_DEBUG = DEBUG
 JSON_DEBUG = DEBUG
-
+INTERCEPT_REDIRECTS = False
 
 ADMINS = (
     ('Sanjay B', 'sanjay@therateof.com'),

@@ -81,7 +81,7 @@ class MyUser(AbstractBaseUser):
         elif Guardian.objects.filter(user=self).count() > 0:
             return 'guardian'
         elif Staff.objects.filter(user=self).count() > 0:
-            return 'superuser'
+            return 'staff'
         elif self.is_admin:
             return 'admin'
         elif self.is_staff:
