@@ -14,8 +14,6 @@ def redirect_user(user,username):
        
                # # For checking type of user 
         User_Instance=MyUser.objects.get(email=username).get_category()
-        import pdb
-        pdb.set_trace()
         return HttpResponse("test")
     #     if (User_Instance == "superuser" or User_Instance == "admin"):
     #         return HttpResponseRedirect("/redirectcentre/")
@@ -50,7 +48,7 @@ def login_user(request):
                
                # # For checking type of user 
                 User_Instance=MyUser.objects.get(email=username).get_category()
-                if (User_Instance == "superuser" or User_Instance == "admin" or User_Instance == 'tutor'):
+                if (User_Instance == "superuser" or User_Instance == "admin" or User_Instance == 'tutor' or User_Instance == 'staff'):
                     
                     return HttpResponseRedirect("/redirectcentre/")
                    # return HttpResponse("Teacher")
