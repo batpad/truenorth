@@ -163,6 +163,26 @@
 
 		}
 	});
+	
+	var contentHeight = $('#header').height() + ('#content').height();
+    var footerHeight = $('#footer').height();
+    var viewportHeight = $(document).height();
+    if ((contentHeight + footerHeight) < viewportHeight) {
+        $('#footer').css({
+            'position': 'absolute',
+            'bottom': '0px',
+            'left': '0px',
+            'right': '0px'
+        });
+    } else {
+        ('#footer').css({
+            'position': '',
+            'bottom': '',
+            'left': '',
+            'right': ''
+        });
+    }
+
 /*
     $('#attendanceform').submit(function (event) {
      event.preventDefault();
