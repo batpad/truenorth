@@ -6,6 +6,7 @@ from django.utils import timezone
 from ox.django.shortcuts import render_to_json_response
 from sat.login.models import *
 import datetime
+from utils import add_zero
 
 # Do we need to filter tutors and staff according to centre?
 
@@ -384,7 +385,7 @@ def checkin(request):
         time_out = request.GET.get("time_out", '')
         if time_out == '':
             time_out = None
-        date = request.GET.get("date", timezone.now().strftime("%d %b, %Y"))
+        date = request.GET.get("date", timezone.now().strftime("%d %B, %Y"))
         is_present = request.GET.get("is_present", True)
         if is_present == 'false':
             is_present = False
@@ -403,7 +404,7 @@ def checkin(request):
         if date == '':
             today = timezone.now()
         else:
-            today = datetime.datetime.strptime(date, "%d %b, %Y")
+            today = datetime.datetime.strptime(date, "%d %B, %Y")
         time_in_hours,time_in_mins = (int(t) for t in time_in.split(":"))
         time_in_obj = datetime.time(time_in_hours,time_in_mins)
         time_in = datetime.datetime.combine(today,time_in_obj)
@@ -439,7 +440,7 @@ def has_attendance(request):
     if date == '':
         date = timezone.now()
     else:
-        date = datetime.datetime.strptime(date, "%d %b, %Y")
+        date = datetime.datetime.strptime(date, "%d %B, %Y")
     
     today_min = datetime.datetime.combine(date, datetime.time.min)
     today_max = datetime.datetime.combine(date, datetime.time.max)
@@ -458,7 +459,7 @@ def view_attendance(request):
     if date == '':
         today = timezone.now()
     else:
-        today = datetime.datetime.strptime(date, "%d %b, %Y")
+        today = datetime.datetime.strptime(add_zero(date), "%d %B, %Y")
     students = [student.user.get_attendance_data(today) for student in Student.objects.filter(is_active=True)]
     return render_to_response('view_attendance.html',{'students':students, 'date': today}, context_instance=RequestContext(request))
 
@@ -467,7 +468,7 @@ def view_attendance_tutor(request):
     if date == '':
         today = timezone.now()
     else:
-        today = datetime.datetime.strptime(date, "%d %b, %Y")
+        today = datetime.datetime.strptime(add_zero(date), "%d %B, %Y")
     # Is this line needed ?
     #tutors = Tutor.objects.all()
 

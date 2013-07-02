@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load date_extras %}
 
 {% block content %}
         <h3 class="center headingContent">View attendance: Tutors</h3>
@@ -11,7 +12,7 @@
         
         <div class="center datepickerButton">   
             <h4>Set Date to Mark Attendance</h4>
-            <input type="text" class="datepicker" value="{{ date|date:'d M, Y'}}" id="attendanceDate">
+            <input type="text" class="datepicker" value="{{ date|format_date }}" id="attendanceDate">
         </div>
         
         <br><br>
@@ -82,7 +83,7 @@
 
         <div data-role="popup" id="studentAttPopup" data-theme="d" data-overlay-theme="b" class="ui-content">
             <h3 class="center">Mark attendance</h3>
-            <p class="center"><em>{{ date }}</em></p>
+            <p class="center"><em>{{ date|date:"d M, Y" }}</em></p>
             <br>
             <form id ="attendanceform" data-ajax="false">
                 <p><strong>Attendance</strong></p>
