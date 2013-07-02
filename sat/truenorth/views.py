@@ -445,7 +445,7 @@ def has_attendance(request):
     today_max = datetime.datetime.combine(date, datetime.time.max)
     user = MyUser.objects.get(id=user_id)
     today_qset = Checkin.objects.filter(user=user).filter(time_in__range=(today_min, today_max))
-    now = timezone.now().strftime("%H:%m")
+    now = timezone.now().strftime("%H:%M")
     if today_qset.count() > 0:
         checkin_dict = today_qset[0].get_dict()
         #time_in = today_qset[0].time_in.strftime("%H:%m")
