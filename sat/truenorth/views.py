@@ -25,7 +25,13 @@ def attendance_detail_ajax(request,iden):
     attendee = MyUser.objects.get(id=iden)
     return render_to_response('attendance_detail_ajax.html',{'attendee':attendee},context_instance=RequestContext(request))
 
-
+def get_month_attendance(request):
+    id = int(request.GET.get('id', 0))
+    month = int(request.GET.get('month', 1))
+    year = int(request.GET.get('year', 2013))
+    attendee = MyUser.objects.get(id=id)
+    data = attendee.get_month_attendance(month, year)
+    return render_to_json_response(data)
 
 def viewstafflist(request):
     staff = Staff.objects.all()

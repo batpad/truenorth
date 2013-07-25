@@ -2,7 +2,7 @@
 	if ($('#calendar').length === 0)
 	    return;
 		
-	    var cal = $('#calendar').calendario({
+	    cal = $('#calendar').calendario({
 		displayWeekAbbr : true,
 	    });
 	
@@ -21,6 +21,16 @@
 			});
 
             function updateMonthYear() {				
+                var month = cal.getMonth();
+                var year = cal.getYear();
+                $.getJSON("/get_month_attendance/", {
+                    'id': CURRENT_STUDENT_ID,
+                    'year': year,
+                    'month': month
+                }, function(data) {
+                    cal.caldata = {};
+                    cal.setData(data);
+                });
                 $month.html( cal.getMonthName() );
                 $year.html( cal.getYear() );
             }
@@ -74,6 +84,27 @@
     }
     $content.css("overflow", "visible");
     });*/
+
+    $('#showAttended').change(function() {
+        var checked = $(this).is(":checked");
+        if (checked) {
+            $('.dateAttendanceUl').find('li').each(function() {
+                var $tickmark = $(this).find('.presentIcon');
+                if (!$tickmark.hasClass('presentIconGreen')) {
+                    $(this).hide();
+                } 
+            });
+        } else {
+            $('.dateAttendanceUl').find('li').show();
+        }
+    });
+
+    $('.viewAttendanceCalendar').click(function() {
+        var id = $(this).closest('li').attr("data-id");
+        CURRENT_STUDENT_ID = id;
+        $('#studentAttCal').popup('open');    
+        updateMonthYear();
+    });
 
 	$('.markAttendanceBtn').click(function(e) {
 	    e.preventDefault();
@@ -164,7 +195,7 @@
 		}
 	});
 	
-	var contentHeight = $('#header').height() + ('#content').height();
+	var contentHeight = $('#header').height() + $('#content').height();
     var footerHeight = $('#footer').height();
     var viewportHeight = $(document).height();
     if ((contentHeight + footerHeight) < viewportHeight) {

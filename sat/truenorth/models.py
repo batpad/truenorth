@@ -305,6 +305,11 @@ class Checkin(models.Model):
         dtstring = self.time_in.strftime("%d %b, %Y at %H:%M")
         return unicode(self.user) + " on " + dtstring
 
+    def get_data(self):
+        dtstring = self.time_in.strftime("%m-%d-%Y")
+        return dtstring
+        
+
     def get_dict(self):
         return {
             'id': self.id,

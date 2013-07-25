@@ -112,6 +112,18 @@ class MyUser(AbstractBaseUser):
             }
         return ret_dict
 
+    def get_month_attendance(self, month, year):
+        '''
+            AJAX view for calendar display - returns data required for calendar
+        '''    
+        date_input = datetime.datetime(year,month,1)
+        range_dates = get_month_day_range(date_input)
+        attendance = self.get_attendance_between_dates(range_dates[1],range_dates[0])
+        d = {}
+        for a in attendance:
+            d[a.get_data()] = "P"
+        return d        
+
     def get_attendance_for_month(self,month,year):
         '''
         get attendance for a specfic month of a year.Eg: for May of 2013, pass parameters 5, 2013
