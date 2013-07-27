@@ -14,13 +14,14 @@
             <input type="text" class="datepicker" value="{{ date|format_date }}" id="attendanceDate">
         </div>
         
-        <div data-role="fieldcontain">
-            <label for="showAttended">
-                <input type="checkbox" name="showAttended" id="showAttended" />
-                Show only attended
-            </label>
-        </div>
-       
+		<form>
+			<div data-role="fieldcontain">
+				<label for="showAttended">
+					<input type="checkbox" name="showAttended" id="showAttended" />
+					Show only attended
+				</label>
+			</div>
+       </form>
 
         <ul data-role="listview" data-split-icon="gear" data-split-theme="d" data-inset="true" data-filter="true" data-filter-placeholder="Type a student's name to filter the list" class="dateAttendanceUl listWhiteGradient">
 	  {% for student in students %}
