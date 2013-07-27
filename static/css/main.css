@@ -337,7 +337,7 @@ label.ui-input-text {
     color: #777;
 }
 
-.ui-btn-up-e, .ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active, .ui-btn-hover-e:visited, .ui-header .ui-btn {
+.ui-btn-up-e, .ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active, .ui-btn-hover-e:visited, .ui-header .ui-btn, .ui-btn-up-e:visited, .ui-btn-up-e a.ui-link-inherit {
     color: #fff;
     text-shadow: none;
     border: none;
