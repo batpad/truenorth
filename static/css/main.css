@@ -337,7 +337,7 @@ label.ui-input-text {
     color: #777;
 }
 
-.ui-btn-up-e, .ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active, .ui-btn-hover-e:visited, .ui-header .ui-btn {
+.ui-btn-up-e, .ui-btn-hover-e, .ui-btn-hover-e:hover, .ui-btn-active, .ui-btn-hover-e:visited, .ui-header .ui-btn, .ui-btn-up-e:visited, .ui-btn-up-e a.ui-link-inherit {
     color: #fff;
     text-shadow: none;
     border: none;
@@ -456,6 +456,23 @@ label.ui-input-text {
 
 #custom-next {
     padding: 0 0 12px 0;
+}
+
+.fc-calendar .fc-row > div.fc-content:after {
+	content: '';
+}
+
+.fc-calendar .fc-row > div > span.fc-date {
+	z-index: 1;
+}
+
+.attended {
+	display: inline-block !important;
+	position: absolute;
+	bottom: 0px;
+	background: #CA252B;
+	width: 100%;
+	height: 10px;
 }
 
 /* end calendar */
