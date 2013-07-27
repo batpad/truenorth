@@ -195,7 +195,7 @@
 		}
 	});
 	
-	var contentHeight = $('#header').height() + $('#content').height();
+/*	var contentHeight = $('#header').height() + $('#content').height();
     var footerHeight = $('#footer').height();
     var viewportHeight = $(document).height();
     if ((contentHeight + footerHeight) < viewportHeight) {
@@ -212,7 +212,7 @@
             'left': '',
             'right': ''
         });
-    }
+    }*/
 
 /*
     $('#attendanceform').submit(function (event) {

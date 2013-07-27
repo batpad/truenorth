@@ -485,6 +485,10 @@ label.ui-input-text {
         float: left;
         width: 100%;
     }
+	
+	.markAttendanceBtn, .viewAttendanceBtn, .viewAttendanceCalendar {
+		display: block;
+	}
 }
 
 /* end media queries */
