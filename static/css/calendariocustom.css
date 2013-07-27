@@ -215,7 +215,7 @@
 }
 
 .fc-calendar .fc-row > div.fc-today {
-	background: #CA252B; /* formerly ef4f69  */
+	background: #1B2670; /* formerly ef4f69  */
 	box-shadow: inset 0 -1px 1px rgba(0,0,0,0.1);
 }
 
@@ -225,15 +225,16 @@
 }
 
 .fc-calendar .fc-row > div.fc-content:after {
-	content: '\00B7';
+	/* content: '\00B7'; */
+	content: '';
 	text-align: center;
-	width: 20px;
-	margin-left: -10px;
+	/* width: 20px; 
+	left: 50%;
+	margin-left: -10px;*/
 	position: absolute;
 	color: #DDD;
 	font-size: 70px;
 	line-height: 20px;
-	left: 50%;
 	bottom: 3px;
 }
 
