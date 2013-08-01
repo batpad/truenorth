@@ -115,8 +115,8 @@
 }
 
 .ui-header .ui-btn-left, .ui-header .ui-collapsible {
-    bottom: 0;
-	top: auto;
+    /* bottom: 0; */
+	top: 83px;
 }
 
 .ui-header .ui-btn-left {
