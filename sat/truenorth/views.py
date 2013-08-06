@@ -60,7 +60,7 @@ def edit_student(request,iden):
     student = Student.objects.get(id=iden)
     if request.POST:
        #Create a guardian
-        if request.POST['guardian1_email'] and request.POST['guardian1_tel']:
+        if request.POST['guardian1_email']:
             try:
                 # Already  a guardian
                 guardian1 = Guardian.objects.get(email=request.POST['guardian1_email'])
@@ -89,7 +89,7 @@ def edit_student(request,iden):
             guardian1 = None
 
 
-        if request.POST['guardian2_email'] and request.POST['guardian2_tel']:
+        if request.POST['guardian2_email']:
             try:
                 # Already  a guardian
                 guardian2 = Guardian.objects.get(email=request.POST['guardian2_email'])
