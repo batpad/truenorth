@@ -255,49 +255,55 @@ def add_student(request):
 
         
        #Create guardian 1
-        if request.POST['guardian1_email'] and request.POST['guardian1_tel']:
-            guardian1_email = request.POST['guardian1_email']
-            guardian1_tel = request.POST['guardian1_tel']
-            guardian1_user = MyUser.objects.create_user(guardian1_email)
-            guardian1_user.set_password(guardian1_tel)
-            guardian1_user.save()
+        if request.POST['guardian1_email']:
+            try:
+                guardian1 = Guardian.objects.get(email=request.POST['guardian1_email'])
+            except: 
+                guardian1_email = request.POST['guardian1_email']
+                guardian1_tel = request.POST['guardian1_tel']
+                guardian1_user = MyUser.objects.create_user(guardian1_email)
+                guardian1_user.set_password(guardian1_tel)
+                guardian1_user.save()
 
 
-            guardian1 =Guardian()
+                guardian1 =Guardian()
 
+                
+                if request.POST['guardian1_full_name']:
+                    guardian1.full_name = request.POST['guardian1_full_name']
+                else:
+                    guardian1.full_name = ""
+                guardian1.number = request.POST["guardian1_tel"]
+                guardian1.email = request.POST["guardian1_email"]
+                guardian1.user = guardian1_user
             
-            if request.POST['guardian1_full_name']:
-                guardian1.full_name = request.POST['guardian1_full_name']
-            else:
-                guardian1.full_name = ""
-            guardian1.number = request.POST["guardian1_tel"]
-            guardian1.email = request.POST["guardian1_email"]
-            guardian1.user = guardian1_user
-        
-            guardian1.save()
+                guardian1.save()
         else:
             guardian1 = None
 
-        if request.POST['guardian2_email'] and request.POST['guardian2_tel']:
-            guardian2_email = request.POST['guardian2_email']
-            guardian2_tel = request.POST['guardian2_tel']
-            guardian2_user = MyUser.objects.create_user(guardian2_email)
-            guardian2_user.set_password(guardian2_tel)
-            guardian2_user.save()
+        if request.POST['guardian2_email']:
+            try:
+                guardian2 = Guardian.objects.get(email=request.POST['guardian2_email'])
+            except:
+                guardian2_email = request.POST['guardian2_email']
+                guardian2_tel = request.POST['guardian2_tel']
+                guardian2_user = MyUser.objects.create_user(guardian2_email)
+                guardian2_user.set_password(guardian2_tel)
+                guardian2_user.save()
 
 
-            guardian2 =Guardian()
+                guardian2 =Guardian()
 
+                
+                if request.POST['guardian2_full_name']:
+                    guardian2.full_name = request.POST['guardian2_full_name']
+                else:
+                    guardian2.full_name = ""
+                guardian2.number = request.POST["guardian2_tel"]
+                guardian2.email = request.POST["guardian2_email"]
+                guardian2.user = guardian2_user
             
-            if request.POST['guardian2_full_name']:
-                guardian2.full_name = request.POST['guardian2_full_name']
-            else:
-                guardian2.full_name = ""
-            guardian2.number = request.POST["guardian2_tel"]
-            guardian2.email = request.POST["guardian2_email"]
-            guardian2.user = guardian2_user
-        
-            guardian2.save()
+                guardian2.save()
         else:
             guardian2 = None
 
