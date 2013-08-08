@@ -121,7 +121,7 @@ class MyUser(AbstractBaseUser):
         attendance = self.get_attendance_between_dates(range_dates[1],range_dates[0])
         d = {}
         for a in attendance:
-            d[a.get_data()] = "P"
+            d[a.get_data()] = "<span class='attended'></span>"
         return d        
 
     def get_attendance_for_month(self,month,year):
