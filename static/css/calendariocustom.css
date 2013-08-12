@@ -197,7 +197,7 @@
 
 .fc-calendar .fc-row > div {
 	background: #fff;
-	cursor: pointer;
+	/* cursor: pointer; */
 }
 
 .fc-calendar .fc-row > div:empty {
