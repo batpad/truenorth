@@ -1,68 +1,75 @@
     $(document).ready(function(){
-	if ($('#calendar').length === 0)
-	    return;
+
+		$(window).resize(stickFooter);
+		$(window).resize();
+				
+		if ($('#calendar').length === 0)
+		    return;
 		
-	    cal = $('#calendar').calendario({
-		displayWeekAbbr : true,
-	    });
-	
-       var $month = $( '#custom-month' ).html( cal.getMonthName() ),
-            $year = $( '#custom-year' ).html( cal.getYear() );
-
-            $( '#custom-next' ).on( 'click', function() {
-                cal.gotoNextMonth( updateMonthYear );
-            });
-            $( '#custom-prev' ).on( 'click', function() {
-                cal.gotoPreviousMonth( updateMonthYear );
-            });
-            
-            $('#custom-current').on( 'click', function() {
-					cal.gotoNow( updateMonthYear );
+		if ($('#calendar').length > 0) {
+			cal = $('#calendar').calendario({
+				displayWeekAbbr : true
 			});
+		
+			var $month = $( '#custom-month' ).html( cal.getMonthName() ),
+				$year = $( '#custom-year' ).html( cal.getYear() );
 
-            function updateMonthYear() {				
-                var month = cal.getMonth();
-                var year = cal.getYear();
-                $.getJSON("/get_month_attendance/", {
-                    'id': CURRENT_STUDENT_ID,
-                    'year': year,
-                    'month': month
-                }, function(data) {
-                    cal.caldata = {};
-                    cal.setData(data);
-                });
-                $month.html( cal.getMonthName() );
-                $year.html( cal.getYear() );
-            }
+		}
+		
+		$( '#custom-next' ).on( 'click', function() {
+			cal.gotoNextMonth( updateMonthYear );
+		});
+		$( '#custom-prev' ).on( 'click', function() {
+			cal.gotoPreviousMonth( updateMonthYear );
+		});
+		
+		$('#custom-current').on( 'click', function() {
+				cal.gotoNow( updateMonthYear );
+		});
+
+		function updateMonthYear() {				
+			var month = cal.getMonth();
+			var year = cal.getYear();
+			$.getJSON("/get_month_attendance/", {
+				'id': CURRENT_STUDENT_ID,
+				'year': year,
+				'month': month
+			}, function(data) {
+				cal.caldata = {};
+				cal.setData(data);
+			});
+			$month.html( cal.getMonthName() );
+			$year.html( cal.getYear() );
+		}
             
-            
-            
-/*         function stickFooter() {
-    var $content = $('.ui-content');
-    var $footer = $('.ui-footer');
-    var $header = $('.ui-header');
-    var footerHeight = $footer.height();
-    var $headerHeight = $header.height();
-    $content.css("overflow", "auto");
-    var contentHeight = $content.outerHeight();
-    var viewportHeight = $(window).height();
-    if ((contentHeight + footerHeight + headerHeight) > viewportHeight) {
-        $footer.css({
-            'position': 'static',
-            'bottom': 'inherit',
-            'left': 'inherit',
-            'right': 'inherit'
-        });
-    } else {
-        $footer.css({
-            'position': 'absolute',
-            'bottom': '0px',
-            'left': '0px',
-            'right': '0px'
-        });
-    }
-    $content.css("overflow", "visible");
-}*/
+        			
+		function stickFooter() {
+			var $content = $('.ui-content');
+			var $footer = $('.ui-footer');
+			var $header = $('.ui-header');
+			var footerHeight = $footer.height();
+			var headerHeight = $header.height();
+			$content.css("overflow", "auto");
+			var contentHeight = $content.outerHeight();
+			var viewportHeight = $(window).height();
+			console.log(contentHeight, headerHeight, footerHeight, viewportHeight);
+			if ((contentHeight + footerHeight + headerHeight) > viewportHeight) {
+				$footer.css({
+					'position': 'static',
+					'bottom': 'inherit',
+					'left': 'inherit',
+					'right': 'inherit'
+				});
+			} else {
+				$footer.css({
+					'position': 'absolute',
+					'bottom': '0px',
+					'left': '0px',
+					'right': '0px'
+				});
+			}
+			$content.css("overflow", "visible");
+		}
        
 /*    var $page = $('.ui-page');
     var viewportHeight = $(window).height();

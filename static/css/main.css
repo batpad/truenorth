@@ -47,6 +47,10 @@
     color: #444;
 }
 
+.ui-page {
+	position: relative !important; /* needed for the sticky footer to work */
+}
+
 .ui-mobile-viewport {
     background: #ddd;
 }
