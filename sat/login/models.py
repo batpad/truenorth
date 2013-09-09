@@ -94,23 +94,6 @@ class MyUser(AbstractBaseUser):
         attendance = self.get_attendance_between_dates(start_date,end_date)
         return attendance.count()
 
-    def get_attendance_for_month(self,month,year):
-        '''
-        get attendance for a specfic month of a year.Eg: for May of 2013, pass parameters 5, 2013
-        '''
-        day_int = 1
-        month_int = int(month)
-        year_int = int(year)
-        date_input = datetime.datetime(year_int,month_int,day_int)
-        range_dates = get_month_day_range(date_input)
-        attendance = self.get_attendance_between_dates(range_dates[1],range_dates[0])
-        count_attendance = attendance.count()
-        count_days = get_days_between_dates(range_dates[0], range_dates[1])
-        ret_dict =  {
-            'attendance':count_attendance,
-            'total_days':count_days
-            }
-        return ret_dict
 
     def get_month_attendance(self, month, year):
         '''

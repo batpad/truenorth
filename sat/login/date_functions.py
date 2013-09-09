@@ -18,7 +18,7 @@ Month with 28 days:
 
 def get_month_day_range(date):
     last_day = date + relativedelta(day=1, months=+1, days=-1)
-    first_day = date + relativedelta(day=1)
+    first_day = date + relativedelta(months=-1)
     return first_day, last_day
 
 def get_days_between_dates(first_date,second_date):

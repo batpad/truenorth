@@ -17,11 +17,11 @@ def production():
     env.hosts = ['%(project_name)s@marlon.in'%env, ]
     env.project_root = '/srv/%(project_name)s'%env
 
-def bzr_push():
-    local('bzr push bzr+ssh://%(project_name)s@%(host)s%(project_root)s'%env)
+def git_push():
+    local('git push'%env)
 
-def bzr_update():
-    run('cd %(project_root)s;bzr update'%env)
+def git_update():
+    run('cd %(project_root)s;git pull'%env)
 
 def virtual_run(cmd, *a, **kw):
     cmd = 'cd %s; source bin/activate; %s' % (env.project_root, cmd)
@@ -41,8 +41,8 @@ def setup():
     update_requirements()
 
 def deploy():
-    bzr_push()
-    bzr_update()
+    git_push()
+    git_update()
     virtual_run('python %(project_root)s/manage.py collectstatic --noinput'%env)
     # virtual_run('python %(project_root)s/%(project_name)s/manage.py syncdb;python %(project_root)s/%(project_name)s/manage.py migrate'%env)
     run('touch %(project_root)s/wsgi/django.wsgi'%env)

@@ -3,6 +3,6 @@
 <p><strong>Since admission:</strong> {{ attendee.get_attendance_from_admission.attendance }} out of {{ attendee.get_attendance_from_admission.total_days }}</p>
  -->
  
- <p><strong>Last 30 days:</strong> {{ attendee.get_attendance_for_this_month.attendance }}</p>
+ <p><strong>This month:</strong> {{ attendee.get_attendance_for_this_month.attendance }}</p>
 <p><strong>Last 7 days:</strong> {{ attendee.get_attendance_for_this_week.attendance }}</p>
 <p><strong>Since admission:</strong> {{ attendee.get_attendance_from_admission.attendance }} / {{ attendee.get_attendance_from_admission.total_days }}</p>
