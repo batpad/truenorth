@@ -40,7 +40,7 @@ class Student(models.Model):
     @classmethod
     def get_not_attended(self, start_date, end_date):
         attended_users = set([c.user for c in Checkin.objects.filter(time_in__gt=start_date).filter(time_in__lt=end_date)])
-        not_attended_users = Student.objects.exclude(user__in=list(attended_users))
+        not_attended_users = Student.objects.exclude(is_active=False).exclude(user__in=list(attended_users))
         return not_attended_users
                     
 
