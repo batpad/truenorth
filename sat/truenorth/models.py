@@ -37,10 +37,16 @@ class Student(models.Model):
     def get_email(self):
         return self.user.email
 
-
+    @classmethod
+    def get_not_attended(self, start_date, end_date):
+        attended_users = set([c.user for c in Checkin.objects.filter(time_in__gt=start_date).filter(time_in__lt=end_date)])
+        not_attended_users = Student.objects.exclude(user__in=list(attended_users))
+        return not_attended_users
+                    
 
     def __unicode__(self):
         return ( self.first_name + " " + self.last_name)
+
     class Meta:
         ordering = ['first_name',]
 

@@ -7,6 +7,7 @@ from ox.django.shortcuts import render_to_json_response
 from sat.login.models import *
 import datetime
 from utils import add_zero
+from dateutil.relativedelta import relativedelta
 
 # Do we need to filter tutors and staff according to centre?
 
@@ -120,6 +121,7 @@ def edit_student(request,iden):
         if request.POST['is_active'] == 'inactive':
             student.is_active = False
         else:
+
             student.is_active = True
 
         
@@ -249,7 +251,11 @@ def add_student(request):
        #Create a user for Student 
         student_email = request.POST['email']
         student_mobile = request.POST['mobile']
-        student_user = MyUser.objects.create_user(student_email)
+        try:
+            student_user = MyUser.objects.get(email=student_email)
+        except:
+            student_user = MyUser.objects.create_user(student_email)
+
         student_user.set_password(student_mobile)
         student_user.save()
 
@@ -486,4 +492,14 @@ def view_attendance_tutor(request):
 
     tutors = [tutor.user.get_attendance_data(today) for tutor in Tutor.objects.all()]
     return render_to_response('attendance_tutors.html',{'tutors':tutors, 'date': today}, context_instance=RequestContext(request))
-    
+
+
+def not_attended_emails(request, parents=False):
+    now = datetime.datetime.now()
+    week_ago = now + relativedelta(days=-7)
+    not_attended_students = Student.get_not_attended(now, week_ago)
+    if not parents:
+        emails = [s.user.email for s in not_attended_students]
+    else:
+        emails = [s.guardian_1.user.email for s in not_attended_students]
+    return HttpResponse(", ".join(emails))        
