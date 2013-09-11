@@ -501,5 +501,5 @@ def not_attended_emails(request, parents=False):
     if not parents:
         emails = [s.user.email for s in not_attended_students]
     else:
-        emails = [s.guardian_1.user.email for s in not_attended_students]
+        emails = [s.guardian_1.user.email for s in not_attended_students.exclude(guardian_1__isnull=True)]
     return HttpResponse(", ".join(emails))        
