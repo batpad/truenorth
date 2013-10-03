@@ -473,12 +473,21 @@ def has_attendance(request):
         return render_to_json_response({'success': 'no', 'now': now})
 
 def view_attendance(request):
+    try:
+        if request.session['centre'] == "All":
+            students = Student.objects.all()
+        else:
+            centre_obj = Centre.objects.get(name=request.session['centre'])
+            students  = Student.objects.filter(centre=centre_obj)
+    except:
+        students = Student.objects.all()
+
     date = request.GET.get('date', '')
     if date == '':
         today = timezone.now()
     else:
         today = datetime.datetime.strptime(add_zero(date), "%d %B, %Y")
-    students = [student.user.get_attendance_data(today) for student in Student.objects.filter(is_active=True)]
+    students = [student.user.get_attendance_data(today) for student in students.filter(is_active=True)]
     return render_to_response('view_attendance.html',{'students':students, 'date': today}, context_instance=RequestContext(request))
 
 def view_attendance_tutor(request):
